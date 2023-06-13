@@ -1,0 +1,22 @@
+*services
+	-catalogApi=> 5011
+	-PhotoApi  =>5012
+
+*IdentityServer=>5001
+
+
+
+
+
+
+
+
+
+
+
+
+docker destop ismailsincar veya ismailsincar@gmail.com iS47????
+ubuntu20.4 olaký giriþ lazým olursa kullanýcý adý ismail þifre ismail
+identitServer 1433   kullanýcýadý sa  þifre:iS47????
+partainer url:https://localhost:9443/   kullanýcý adý admin þifre:iS47????iS47????
+mongodb url mongodb://localhost:27017  bunu mongodb destop compact acýyoruz
