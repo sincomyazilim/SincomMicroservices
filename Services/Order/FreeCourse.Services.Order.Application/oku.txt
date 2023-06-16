@@ -1,0 +1,6 @@
+﻿bu katman mvc yada api olmadıgı ıcın yanı class lıbrary oldugu ıcın automapper yukleyebılırz ama  startup yada net 6 versıyonunda program.cs ekledıgımızıcın burdan cagıramıyoruz yanı ekleyemıyoruz bunun altertanıfı kendımız nrormal autoMapper yukluyoruz ve esylatırmalerı ıcın yanı statupdakı görevını bu sınıf yapıyor ObjectMapper
+
+
+mirtion 94 vıdeoda yapıyor dbcontext FreeCourse.Services.Order.Infrastructure bu katmandadır verıtaban baglantı ıse apı prjesının saturtp kısman ekledık ve bu katmana işret ettık
+
+migration yapıılırken secılecek proje FreeCourse.Services.Order.Infrastructure

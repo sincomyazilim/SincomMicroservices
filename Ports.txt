@@ -1,8 +1,10 @@
 *services
-	-catalogApi=> 5011
+	-catalogApi=>5011 identitServer 1433   kullanýcýadý sa  þifre:iS47????
 	-PhotoApi  =>5012
-
-*IdentityServer=>5001
+	-basketAPI= >5013  redis port=> 6379
+	-discountApý = >5014   postgresql=>5432  kullanýcý adý:postgres þifre: iS47????
+	-Order Api    =>5015   sqlserver 1433-1444   kullanýcýadý sa  þifre:iS47????
+*IdentityServer=>5001      sqlserver 1433-1433   kullanýcýadý sa  þifre:iS47????
 
 
 
@@ -17,6 +19,8 @@
 
 docker destop ismailsincar veya ismailsincar@gmail.com iS47????
 ubuntu20.4 olaký giriþ lazým olursa kullanýcý adý ismail þifre ismail
-identitServer 1433   kullanýcýadý sa  þifre:iS47????
+identitServer 1433-1433   kullanýcýadý sa  þifre:iS47????
+order api verýtabaný sqlservr 1433-1444   kullanýcýadý sa  þifre:iS47????
 partainer url:https://localhost:9443/   kullanýcý adý admin þifre:iS47????iS47????
 mongodb url mongodb://localhost:27017  bunu mongodb destop compact acýyoruz
+postgresql=>5432  kullanýcý adý:admin þifre: iS47????

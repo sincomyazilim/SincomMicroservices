@@ -2,6 +2,8 @@ using FreeCourse.Services.Catalog.Services.Abstract;
 using FreeCourse.Services.Catalog.Services.Concrete;
 using FreeCourse.Services.Catalog.Settings.Abstract;
 using FreeCourse.Services.Catalog.Settings.Concrete;
+using FreeCourse.Shared.Services.Abstract;
+using FreeCourse.Shared.Services.Concrete;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,12 +38,11 @@ namespace FreeCourse.Services.Catalog
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
                 opt.Authority = Configuration["IdentityServerURL"];
-                opt.Audience = "recourse_catalog";//ýdentityserver ýcýndeký confýd dosyasýnda recourse_catalog aldým ordan kontrol edecek
+                opt.Audience = "resourse_catalog";//ýdentityserver ýcýndeký confýd dosyasýnda recourse_catalog aldým ordan kontrol edecek
                 opt.RequireHttpsMetadata = false;
             });//41
 
-
-
+            
 
             services.AddScoped<ICategoryService,CategoryService>();//24 ekledýk
             services.AddScoped<ICourseService,CourseService>();//25 ekledýk
@@ -52,7 +53,7 @@ namespace FreeCourse.Services.Catalog
             //services.AddControllers();//41 alttaký gýbý genýsletýyoruz
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter());//41 burayý genýsletýyoruz ve butun kontroller logýn token alamdan bagalanamz
+                opt.Filters.Add(new AuthorizeFilter());//41 burayý genýsletýyoruz ve butun kontroller  token alamdan bagalanamz,user sartý yok
             });
 
 

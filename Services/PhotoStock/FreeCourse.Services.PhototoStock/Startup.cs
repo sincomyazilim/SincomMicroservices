@@ -31,7 +31,7 @@ namespace FreeCourse.Services.PhototoStock
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
                 opt.Authority = Configuration["IdentityServerURL"];
-                opt.Audience = "photo_stock_catalog";//ýdentityserver ýcýndeký confýd dosyasýnda photo_stock_catalog aldým ordan kontrol edecek
+                opt.Audience = "resourse_photo_stock";//ýdentityserver ýcýndeký confýd dosyasýnda photo_stock_catalog aldým ordan kontrol edecek
                 opt.RequireHttpsMetadata = false;
             });//50
 
@@ -42,7 +42,7 @@ namespace FreeCourse.Services.PhototoStock
             //services.AddControllers();//50 alttaký gýbý genýsletýyoruz
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter());//50 burayý genýsletýyoruz ve butun kontroller logýn token alamdan bagalanamz
+                opt.Filters.Add(new AuthorizeFilter());//50 burayý genýsletýyoruz ve butun kontroller  token alamdan bagalanamz,user sartý yok
             });
 
 

@@ -4,7 +4,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:40214",
+      "applicationUrl": "http://localhost:5014",
       "sslPort": 0
     }
   },
@@ -17,12 +17,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "FreeCourse.Services.Catalog": {
+    "FreeCourse.Services.Discount": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
-      "launchBrowser": true,//17 browserde acılmaını ıstemıyorum false yaptım
+      "launchBrowser": false,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5011",
+      "applicationUrl": "http://localhost:5014",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -1,0 +1,7 @@
+Order bolumunde domain driven disang  DDD yontemý ýle inþa edecez...
+
+en alt katman domain ona yardýmcý olaca domain.core
+bunu refere edecek ýký katman var appliction ve ýnfrastructure 
+application ayrýca ýnfrastructure refere edýyor
+
+apý katmanýýse sadece application refere edýyor ayrýca responsedto ýcýnde shred refere edýyor
