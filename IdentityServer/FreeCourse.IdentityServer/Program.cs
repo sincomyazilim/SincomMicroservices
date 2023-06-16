@@ -41,7 +41,8 @@ namespace FreeCourse.IdentityServer
 
             try
             {
-                
+               // CreateHostBuilder(args).Build().Run();//sildık
+
                 var host = CreateHostBuilder(args).Build();
 
                 //burda usıng uzerınden startupdakı ApplicationDbContext ulasıyoruz ve ordadan otomatık mıfgretıon yapyoruz verıtanı yoksa kurar mıgratoın yoksa olusturu varsa son halını update eder otomatıklatırıyoruz proje ayagı kalkıtıgında ve usermanger uzerınden de egerkı user tablosunda kullancı yoksa otomatık user ekle
@@ -49,9 +50,9 @@ namespace FreeCourse.IdentityServer
                 {
                     var serviceProvider = scope.ServiceProvider;
                     var applicationDbcontext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-                    applicationDbcontext.Database.Migrate();//otomatık mıratoın yaapr
+                    applicationDbcontext.Database.Migrate();//otomatık mıratoın yaapr 
 
-                    var userManager=serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                    var userManager=serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();//aya kalkarken kullanıcı eklenıyr
                     if (!userManager.Users.Any())
                     {
                         userManager.CreateAsync(new ApplicationUser

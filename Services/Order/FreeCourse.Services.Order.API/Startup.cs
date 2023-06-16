@@ -47,7 +47,7 @@ namespace FreeCourse.Services.Order.API
 
             //giriþ için
 
-            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();//62 giriþ yapýmýs user býlgýsý sartý ve token alacak 62
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();//96 giriþ yapýmýs user býlgýsý sartý ve token alacak 96
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");//sub kelýmesý dönuste sýlýyordu kendý maplemeýsnde Id yapýyordu býzde bu kodla donusu sub býrakdýyorzu
 

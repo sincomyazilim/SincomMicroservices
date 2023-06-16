@@ -1,12 +1,13 @@
 *services
-	-catalogApi=>5011 identitServer 1433   kullanýcýadý sa  þifre:iS47????
-	-PhotoApi  =>5012
-	-basketAPI= >5013  redis port=> 6379
+	-catalogApi=>5011		mongodb
+	-PhotoApi  =>5012		local klasor
+	-basketAPI= >5013		redis port=> 6379
 	-discountApý = >5014   postgresql=>5432  kullanýcý adý:postgres þifre: iS47????
 	-Order Api    =>5015   sqlserver 1433-1444   kullanýcýadý sa  þifre:iS47????
+	-FakePayment => 5016 
 *IdentityServer=>5001      sqlserver 1433-1433   kullanýcýadý sa  þifre:iS47????
 
-
+*Gateways =>5000
 
 
 

@@ -1,0 +1,3 @@
+﻿bu GateWays katmanı kullanıclardan gelen butun ıstekler buraya dusecek ve burası yöneldırme yapacak
+bu proje bbos asp.net core API uygulması olarak kuruldu
+buraya ıkı dosya eklıyoruz configuration.development ve configuration.production
