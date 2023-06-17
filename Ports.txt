@@ -9,7 +9,7 @@
 
 *Gateways =>5000
 
-
+*Wev Projet=>5010
 
 
 
@@ -25,3 +25,7 @@ order api verýtabaný sqlservr 1433-1444   kullanýcýadý sa  þifre:iS47????
 partainer url:https://localhost:9443/   kullanýcý adý admin þifre:iS47????iS47????
 mongodb url mongodb://localhost:27017  bunu mongodb destop compact acýyoruz
 postgresql=>5432  kullanýcý adý:admin þifre: iS47????
+
+
+apý projesýnde token jwt (json web token) uzerýnden oluyor..
+mvc projesý oldugunda accesstoken,refresh token cookiede saklanýyor ile olyor

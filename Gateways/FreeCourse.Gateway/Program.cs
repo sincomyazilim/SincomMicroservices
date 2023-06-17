@@ -25,7 +25,8 @@ namespace FreeCourse.Gateway
 
         // yukardaký medudu buna cevýrýyorz 106
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-          Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) => {
+          Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
+          {
 
               config.AddJsonFile($"configuration.{hostingContext.HostingEnvironment.EnvironmentName.ToLower()}.json").AddEnvironmentVariables();
               //bu mettot ýle configuration.development ve configuration.production ulasabýlýyoruz 106

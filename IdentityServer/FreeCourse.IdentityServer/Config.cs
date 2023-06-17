@@ -39,8 +39,7 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                       }
                    };
 
-        public static IEnumerable<ApiScope> ApiScopes =>
-            new ApiScope[]
+        public static IEnumerable<ApiScope> ApiScopes => new ApiScope[]
             {//38 ekledık içini önce sıldık..
                 new ApiScope("catalog_fullpermission","Catalog API için ful erişim"),//38
                 new ApiScope("photo_stock_fullpermission","Photo Stock API için ful erişim"),//38
@@ -51,7 +50,7 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                 new ApiScope("gateway_fullpermission","Gateway  API için ful erişim"),//109
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)//38 identit kendısı ıcnde teyıt alıyor
             };
-
+       
         public static IEnumerable<Client> Clients =>
             new Client[]
             {//38 çnce içini sildik

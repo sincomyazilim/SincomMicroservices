@@ -1,114 +1,3 @@
-//{//------------------------------------------------------------------------catalog 5011
-//  "Routes": [
-//    {
-//      "DownstreamPathTemplate": "/api/{everything}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 5011
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/services/catalog/{everything}",
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-//      "UpstreamScheme": "http",
-//      "AuthenticationOptions": {//ızın varsa lınkı bagla yoksa catalogu bıle yormadan red et 109
-//        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-//        "AllowedScopes": [ "catalog_fullpermission" ]//tokende hem gateway_fullpermission olup omadıgını burrası kontrol edıyor varsa sorguyu servıslere göturu yoksa göturmez
-//      }
-//    },//-------------------------------------------------------------------- photo 5012
-//    {
-//      "DownstreamPathTemplate": "/api/{everything}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 5012
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/services/phototostock/{everything}",
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-//      "UpstreamScheme": "http",
-//      "AuthenticationOptions": {
-//        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-//        "AllowedScopes": [ "photo_stock_fullpermission" ]
-//      }
-//    },//----------------------------------------------------------------------5013 basket
-//    {
-//      "DownstreamPathTemplate": "/api/{everything}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 5013
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/services/basket/{everything}",
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-//      "UpstreamScheme": "http",
-//      "AuthenticationOptions": {
-//        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-//        "AllowedScopes": [ "basket_fullpermission" ]
-//      }
-//    },//---------------------------------------------------------------------5014 discount
-//    {
-//      "DownstreamPathTemplate": "/api/{everything}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 5014
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/services/discount/{everything}",
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-//      "UpstreamScheme": "http",
-//      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],
-//      "AuthenticationOptions": {
-//        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-//        "AllowedScopes": [ "discount_fullpermission" ]
-//      }
-//    },//-----------------------------------------------------------------5015 order
-//    {
-//      "DownstreamPathTemplate": "/api/{everything}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 5015
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/services/order/{everything}",
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-//      "UpstreamScheme": "http",
-//      "AuthenticationOptions": {
-//        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-//        "AllowedScopes": [ "order_fullpermission" ]
-//      }
-//    },//-----------------------------------------------------------------------5016 fakepayment
-//    {
-//      "DownstreamPathTemplate": "/api/{everything}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": 5016
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/services/fakepayment/{everything}",
-//      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-//      "UpstreamScheme": "http",
-//      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],
-//      "AuthenticationOptions": {
-//        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-//        "AllowedScopes": [ "fakepayment_fullpermission" ]
-//      }
-//    }
-//  ],//---------------------------------------------------------------------------gateways 5000 ornerk asadakı lınk
-//  "GlobalConfiguration": {
-//    "BaseUrl": "http://localhost:5000"
-//  }
-//}
 
 {
   "Routes": [
@@ -126,7 +15,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "catalog_fullpermission" ]
+        "AllowedScopes": ["catalog_fullpermission"]    
       }
     },
     {
@@ -143,7 +32,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "photo_stock_fullpermission" ]
+        "AllowedScopes": ["photo_stock_fullpermission"]
       }
     },
     {
@@ -160,7 +49,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "basket_fullpermission" ]
+        "AllowedScopes": ["basket_fullpermission"]
       }
     },
     {
@@ -177,7 +66,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "discount_fullpermission" ]
+        "AllowedScopes": ["discount_fullpermission"]
       }
     },
     {
@@ -194,7 +83,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "order_fullpermission" ]
+        "AllowedScopes": ["order_fullpermission"]
       }
     },
     {
@@ -211,7 +100,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "payment_fullpermission" ]
+        "AllowedScopes": ["payment_fullpermission"]
       }
     }
   ],

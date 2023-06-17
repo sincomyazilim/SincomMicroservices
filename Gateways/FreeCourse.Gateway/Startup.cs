@@ -25,9 +25,9 @@ namespace FreeCourse.Gateway
         {
             services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
             {
-                options.Authority = Configuration["IdentityServerURL"];
-                options.Audience = "resource_gateway";
-                options.RequireHttpsMetadata = false;
+               options.Authority = Configuration["IdentityServerURL"];
+               options.Audience = "resourse_gateway";
+               options.RequireHttpsMetadata = false;
             });
 
 
