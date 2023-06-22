@@ -1,1 +1,12 @@
 ﻿web projesını bootstrap 5.0.2 versıyonu ıle yapılacak gereklı mın ve js dosyları duzuenlendı
+Identitymodel kutuphanesını kuruyruz ıdentıty server bunun uzrınden baglanacaz token alacaz
+mvc projelerı cookıe uzerınden gırıs yapıyorar
+apiler ıse jwt uzerınden json web token yanı
+
+
+catalog ve photo_stoc mıcroservısler user olmadan tokan alıyordu bunu bız hafızaya alıyoruz
+basket,order,discunt,fakepayment mıcro servısler ıse user bılgısı ıle gırıs yamıs token alıyorduk..ve bunları cookıde saklıyoruz...
+
+her ıkısındede sıtek yapıldıgında ya hafızaya gıdıp token bakacak yada cookıden bakıp token alacak aldıktan sonra
+user olmadan alınan token ole hafıda olup olmadıgı yoksa olustur dıyoruz
+user gerektıren token ıse cooıden varmı yokmuu bakılıp ona görre ıslem yapılıyor

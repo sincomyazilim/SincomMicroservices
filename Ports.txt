@@ -29,3 +29,95 @@ postgresql=>5432  kullanýcý adý:admin þifre: iS47????
 
 apý projesýnde token jwt (json web token) uzerýnden oluyor..
 mvc projesý oldugunda accesstoken,refresh token cookiede saklanýyor ile olyor
+
+
+
+proje özetý oku
+----------------------------------------------------------------------------
+Microservice mimaride  OAuth 2.0 ve OpenID Connect protokollerinin nasýl implement edileceðiniz öðreniyor olacaksýnýz.
+
+Microservice'lere ait veritabanlarýnda tutarlýlýðý saðlamak için Eventual Consistency model'inin nasýl uygulanacaðýný öðreneceksiniz.
+
+Microservice'lerimizi nasýl dockerize edileceðini öðreneceksiniz.
+
+Docker Compose dosyasýnýn nasýl oluþturulacaðýný öðreneceksiniz.
+
+Çeþitli veritabanlarýný container olarak nasýl ayaða kaldýrýlacaðýný öðreniyor olacaksýnýz.
+
+Kursta, udemy benzeri bir online kurs satýþ platformunu microservice mimari ile geliþtiriyor olacaðýz.
+
+Microservices :
+
+Catalog Microservice
+
+Kurslarýmýz ile ilgili bilgilerin tutulmasýndan ve sunulmasýndan sorumlu olacak mikroservisimiz.
+
+MongoDb (Veritabaný)
+
+One-To-Many/One-To-One iliþki
+
+MongoDb
+
+Basket Microservice
+
+Sepet iþlemlerinden sorumlu olacak mikroservisimiz.
+
+RedisDB(Veritabaný)
+
+Discount Microservice
+
+Kullanýcýya tanýmlanacak indirim kuponlarýndan sorumlu olacak mikroservisimiz.
+
+PostgreSQL(Veritabaný)
+
+Order Microservice
+
+Sipariþ iþlemlerinden sorumlu olacak mikroservisimiz.
+
+Bu mikroservisimizde Domain Driven Design yaklaþýmýný kullanarak geliþtiriyor olacaðýz.
+
+Bu mikroservisimizde CQRS tasarým kalýbýný uygulamak için MediatR kütüphanesini kullanýyor olacaðýz.
+
+Sql Server(Veritabaný)
+
+Domain Driven Design
+
+CQRS (MediatR Libarary)
+
+FakePayment Microservice
+
+Ödeme iþlemlerinden sorumlu olacak mikroservisimiz.
+
+IdentityServer Microservice
+
+Sql Server(Veritabaný)
+
+Kullanýcý datalarýn tutulmasýndan,token ve refreshtoken üretilmesinden sorumlu olacak microservisimiz.
+
+PhotoStock Microservice
+
+Kurs fotograflarýnýn tutulmasýndan ve sunulmasýndan sorumlu olacak mikroservisimiz.
+
+API Gateway
+
+Ocelot Library
+
+Message Broker
+
+Mesaj kuyruk sistemi olarak RabbitMQ kullanýyor olacaðýz.
+
+RabbitMQ ile haberleþmek için MassTransit kütüphanesini kullanýyor olacaðýz.
+
+RabbitMQ (MassTransit Library)
+
+Identity Server
+
+Token / RefreshToken üretmek
+
+Access Token ile microservice'lerimizi korumak
+
+OAuth 2.0 / OpenID Connect protokollerine uygun yapý inþa etmek
+
+Asp.Net Core MVC Microservice
+
+Microservice'lerden almýþ olduðu datalarý kullanýcýya gösterecek ve kullanýcý ile etkileþime geçmekten sorumlu olacak UI mikroservisimiz

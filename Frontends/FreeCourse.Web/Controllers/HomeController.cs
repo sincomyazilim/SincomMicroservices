@@ -1,4 +1,7 @@
-﻿using FreeCourse.Web.Models;
+﻿using FreeCourse.Web.Exceptions;
+using FreeCourse.Web.Models;
+using FreeCourse.Web.Services.Abstract;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,25 +15,45 @@ namespace FreeCourse.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICatalogService _catalogService;//148
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
         {
             _logger = logger;
+            _catalogService = catalogService;
+        }
+        //------------------------------------------------
+        public async Task<IActionResult> Index()
+        {
+
+            return View(await _catalogService.GetAllCourseAsync());
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult>Detail(string id)
         {
-            return View();
+            var detailCourse =await _catalogService.GetByCourseId(id);
+            return View(detailCourse);
         }
+
+
 
         public IActionResult Privacy()
         {
             return View();
         }
 
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
-        {
+        {    //150 error düzenleme
+            var errorFeature=HttpContext.Features.Get<IExceptionHandlerFeature>();
+            if (errorFeature != null&& errorFeature.Error is UnAuthorizeException)
+            { 
+                return RedirectToAction(nameof(AuthController.LogOut),"Auth");
+            }
+            //150 hata sınıfımız oldugu zaman cıkıs yaptırıp login  sayfasıan yönlenıyor
+
+
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }

@@ -22,7 +22,7 @@ namespace FreeCourse.IdentityServer.Services//42 bu sınıfla uyelık şartı ve
             if (existUser==null)
             {
                 var errors=new Dictionary<string, object>();
-                errors.Add("error",new List<string> { "Email adınız veya şifreniz yanlış"});
+                errors.Add("errors",new List<string> { "Email   veya şifreniz yanlış"});
                 context.Result.CustomResponse=errors;
                 return;
             }
@@ -30,7 +30,7 @@ namespace FreeCourse.IdentityServer.Services//42 bu sınıfla uyelık şartı ve
             if (passwordCheck == false)
             {
                 var errors = new Dictionary<string, object>();
-                errors.Add("error", new List<string> { "Email adınız veya şifreniz yanlış" });
+                errors.Add("errors", new List<string> { "Email  veya şifreniz yanlış" });
                 context.Result.CustomResponse = errors;
                 return;
             }

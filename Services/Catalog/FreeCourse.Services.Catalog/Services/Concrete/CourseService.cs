@@ -13,16 +13,16 @@ namespace FreeCourse.Services.Catalog.Services.Concrete//25
 {// conctor ıcınde yazılanlar mongodbye baglanıp ılgıl tablodan verı cekmek ıcın yapılıyro
     public class CourseService: ICourseService
     {
-        private readonly IMongoCollection<Course> _courseCollection;
+        private readonly IMongoCollection<Course> _courseCollection;//mongo db argumanları
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
         public CourseService(IMapper mapper, IDatabaseSettings databaseSettings)
         {
-            var client = new MongoClient(databaseSettings.ConnectionString);
+            var client = new MongoClient(databaseSettings.ConnectionString);//mongo db clınet olsutur ve baglan
             var database = client.GetDatabase(databaseSettings.DatabaseName);
-            _courseCollection = database.GetCollection<Course>(databaseSettings.CourseCollectionName);
-            _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);
+            _courseCollection = database.GetCollection<Course>(databaseSettings.CourseCollectionName);//course tablosuna baglan
+            _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);//category tbl baglan
             _mapper = mapper;
         }
         //--------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ namespace FreeCourse.Services.Catalog.Services.Concrete//25
         public async Task<ResponseDto<CourseDto>> CreateCourseAsync(CourseCreateDto courseCreateDto)
         {
             var newCouser = _mapper.Map<Course>(courseCreateDto);
-            await _courseCollection.InsertOneAsync(newCouser);
+            await _courseCollection.InsertOneAsync(newCouser);//mongeya göre eklnıyor
             return ResponseDto<CourseDto>.Success(_mapper.Map<CourseDto>(newCouser), 200);
         }
         public async Task<ResponseDto<NoContent>> UpdateCourseAsync(CourseUpdateDto courseUpdateDto)

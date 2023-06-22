@@ -5,14 +5,14 @@ namespace FreeCourse.Shared.Dtos//20 dto eklıyoruz donusler ıcın
 {
     public class ResponseDto<T>
     {
-        public T Data { get; private set; }//private set dısardan degıstırelemez  onun ıcın private ekledık
+        public T Data { get;  set; }
 
 
         [JsonIgnore]//code dunuslerınde kodlar oldugu ıcın tekrar gondermeye gerek yok ama yazılım ıcınde kullanacagımız ıcın tanımdalık
-        public int StatusCode { get; private set; }
+        public int StatusCode { get;  set; }//137 setler private onları kaldırdık
 
         [JsonIgnore]
-        public bool IsSuccessful { get; private set; }
+        public bool IsSuccessful { get;  set; }
 
         public List<string> Errors { get; set; }
 

@@ -1,0 +1,25 @@
+﻿bu kalsorede mongo dbye baglanma yarları yapılır
+
+appsettings.json dosyaısnda verıtaban abglanmaı yerı yaptık ve orda kulandıgımız ısımlerı gelıp burda ınterface tanımdadık ve aynı ısımde clasa ımpelemnt ettık sımdıde startup da kullancaz
+
+apppsetıngs.json
+"DatabaseSettings": {
+    "CourseCollectionName": "Courses",
+    "CategoryCollectionName": "Categories",
+    "ConnectionString": "mongodb://localhost:27017",
+    "DatabaseName": "CatalogDb"
+    }
+
+
+    startup bu eklendı
+      //appsetingtekı dataları okuma DatabaseSettings bu sınıf uzerınden
+            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));//23 eklendı
+            services.AddSingleton<IDatabaseSettings>(x => 
+            { 
+               return x.GetRequiredService<IOptions<DatabaseSettings>>().Value; 
+            });
+            //23 bu kod datbasebaglantı kurmak ıcın kullandık
+
+
+
+ vee...   bu yola baglanıyor 
