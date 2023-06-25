@@ -69,7 +69,7 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
             {
                 return ResponseDto<NoContent>.Success(204);
             }
-            return ResponseDto<NoContent>.Fail("Eklenemedi veritabna ayaktamı", 500);
+            return ResponseDto<NoContent>.Fail("Eklenemedi veritabanına, ayaktamı?", 500);
         }
 
         public async Task<ResponseDto<NoContent>> Update(Models.Discount discount)
@@ -91,7 +91,7 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
                 }
                 
             
-            return ResponseDto<NoContent>.Fail("Güncelnecek indirim codu yok", 404);
+            return ResponseDto<NoContent>.Fail("Güncelenecek indirim Kodu yok", 404);
         }
     }
 }

@@ -7,6 +7,8 @@
         public string PhotoStockUrl { get; set; }
         public ServiceApi Catalog { get; set; }//132 mvc projednen gateyaw baglan orda Indettıserver yetkın varmı yookmu,varsa  Cataloga baglan  
         public ServiceApi PhotoStock { get; set; }//143 
+        public ServiceApi Basket { get; set; }//154
+        public ServiceApi Discount { get; set; }//162
     }
 
     public class ServiceApi//132

@@ -1,0 +1,2 @@
+bu katman ýndýrým katmanýdýr  sadece ýndýrým kuponlarý tanýmlanacakve ýndýrýmoraný eklenecek göndrýleek burda ayrýca  
+orm olarak dapper kullnaýldý verýtabaný olarakta postgres verýtabaný kullanýldý

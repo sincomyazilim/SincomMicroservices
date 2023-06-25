@@ -6,15 +6,15 @@ namespace FreeCourse.Web.Models.Catalog//130
     public class CreateCourseInput
     {
         [Display(Name ="Kurs Adı")]//137 eklendı
-        [Required(ErrorMessage="Kurs Adı Giriniz")]
+     
         public string Name { get; set; }
 
         [Display(Name = "Açıklama ")]
-        [Required(ErrorMessage = "Açıklama Giriniz")]
+    
         public string Description { get; set; }
 
         [Display(Name = "Kurs Fiyatı")]
-        [Required(ErrorMessage = "Kurs Fiyatı Giriniz")]
+       
         public decimal Price { get; set; }
 
 
@@ -24,7 +24,7 @@ namespace FreeCourse.Web.Models.Catalog//130
         public GetFeatureViewModel Feature { get; set; }
 
         [Display(Name = "Kurs Kategori")]
-        [Required(ErrorMessage = "Kurs Kategori Giriniz")]
+        
         public string CategoryId { get; set; }
 
         [Display(Name = "Kurs Resimi")]
