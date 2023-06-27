@@ -1,4 +1,5 @@
-﻿using FreeCourse.Shared.ControlerBase;
+﻿using FreeCourse.Services.FakePayment.Dtos;
+using FreeCourse.Shared.ControlerBase;
 using FreeCourse.Shared.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,9 @@ namespace FreeCourse.Services.FakePayment.Controllers//100
     public class FakePaymentController : CustomBaseController
     {
         [HttpPost]
-        public IActionResult ReceivePayment() 
+        public IActionResult ReceivePayment(FakePaymentDto fakePaymentDto) 
         {
+            //pamentDto ile ödeme işlemi gercekleştir
             return CreateActionResultInstance<NoContent>(ResponseDto<NoContent>.Success(200));
         }
     }

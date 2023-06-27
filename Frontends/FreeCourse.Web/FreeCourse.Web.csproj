@@ -16,9 +16,4 @@
     <ProjectReference Include="..\..\Shared\FreeCourse.Shared\FreeCourse.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Identit\" />
-    <Folder Include="Models\Order\" />
-  </ItemGroup>
-
 </Project>

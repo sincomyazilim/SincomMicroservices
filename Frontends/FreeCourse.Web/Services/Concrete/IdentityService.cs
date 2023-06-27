@@ -109,6 +109,7 @@ namespace FreeCourse.Web.Services.Concrete//117
 
         public async Task<ResponseDto<bool>> SignIn(SignInput signInput)
         {
+            
             // adres lınkı ayar bu lınkte http s skısmını pasıt et false et yanı
             var disco = await _httpClient.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest
             {

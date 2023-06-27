@@ -35,6 +35,11 @@ namespace FreeCourse.Web.Services.Concrete//130
 
         public async Task<bool> DeleteCourseAsync(string courseId)//133 sılme ıslemı uygulanıyor gonderılen course ıd ye göre
         {
+            var response =await GetByCourseId(courseId);//ders sılerken klasorekı resmıde sıılıyoruz
+
+            await _photoStockService.DeletePhoto(response.Picture);//once sılıyoruz
+               
+            
             var reponse = await _client.DeleteAsync($"courses/{courseId}");
             return reponse.IsSuccessStatusCode;
         }

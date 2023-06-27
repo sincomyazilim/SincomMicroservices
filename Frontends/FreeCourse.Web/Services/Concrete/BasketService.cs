@@ -1,5 +1,6 @@
 ﻿using FreeCourse.Shared.Dtos;
 using FreeCourse.Web.Models.Basket;
+using FreeCourse.Web.Models.Discount;
 using FreeCourse.Web.Services.Abstract;
 using System.Linq;
 using System.Net.Http;
@@ -32,12 +33,13 @@ namespace FreeCourse.Web.Services.Concrete//154
             }
             else//eger basket bos geldıyse yanıyoktur
             {
-                basket = new BasketViewModel{ 
-                    BasketItems=new System.Collections.Generic.List<BasketItemViewModel> { basketItemViewModel }
-                    
-                };
-                
-            
+                basket.BasketItems.Add(basketItemViewModel);
+                //basket = new BasketViewModel{ 
+                //    BasketItems=new System.Collections.Generic.List<BasketItemViewModel> { basketItemViewModel }
+                //BU KOD KULLANMIYORUM CUNKU BasketViewModel NEWLENDIGINDE CTOR METODUNA  _basketItems = new List<BasketItemViewModel>(); EKLIYORUZ
+                //};
+
+
             }
             await SaveOrUpdateBasket(basket);//kayıt et
         }
@@ -60,6 +62,46 @@ namespace FreeCourse.Web.Services.Concrete//154
             await SaveOrUpdateBasket(basket);//son halınıkayıt veye update edıyoruz
             return true;
         }
+
+
+
+
+        //public async Task<bool> ApplyDiscountForCourse(string discountCode,string courseId)//tek derse göre ındırımkodu uretmek
+        //{
+        //    await CanselApplyDiscount();//daha önce ındıırm olmussa ıptalet
+        //    var basket = await GetBasket();
+        //    if (basket == null)
+        //    {
+        //        return false;
+        //    }
+        //    var discountApplyInputCodeAndCourseId = new DiscountApplyInputCodeAndCourseId { Code = discountCode, CourseId = courseId };
+
+        //    var hasdiscount = await _discountService.GetDiscountForCourse(discountApplyInputCodeAndCourseId);
+        //    if (hasdiscount == null)
+        //    {
+        //        return false;
+        //    }
+        //    basket.ApplyDiscount(hasdiscount.Code, hasdiscount.Rate);//sepetı guncellıyoruz bunada metot yazıyoruz 167
+
+        //    await SaveOrUpdateBasket(basket);//son halınıkayıt veye update edıyoruz
+        //    return true;
+        //}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<bool> CanselApplyDiscount()//164 doldurudk dıscount olusturdukondan sonra
         {

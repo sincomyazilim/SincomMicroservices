@@ -18,6 +18,17 @@ namespace FreeCourse.Web.Models.Catalog//130
 
         public DateTime CreatedTime { get; set; }
 
+        //---------------------------------------dersler teke tek ındırım uygulamlı-------------------------
+
+
+
+
+
+
+
+
+        //----------------------------------------------------------------------------------------------------
+
         public GetFeatureViewModel Feature { get; set; }
         public string CategoryId { get; set; }
         public GetCategoryViewModel Category { get; set; }

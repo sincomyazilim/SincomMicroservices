@@ -22,5 +22,6 @@ namespace FreeCourse.Shared.Services.Concrete//59
         
         //public string GetUserId => _httpContextAccessor.HttpContext.User.Claims.Where(x=>x.Type=="Sub").FirstOrDefault().Value;//iki sekılde ulasabılırız
         public string GetUserId => _httpContextAccessor.HttpContext.User.FindFirst("sub").Value;
+       
     }
 }

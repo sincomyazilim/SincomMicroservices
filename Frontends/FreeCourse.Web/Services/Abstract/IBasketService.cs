@@ -11,6 +11,7 @@ namespace FreeCourse.Web.Services.Abstract//153
         Task AddBasketItem(BasketItemViewModel basketItemViewModel);
         Task<bool> RemoveBasketItem(string courseId);
         Task<bool> ApplyDiscount(string discountCode);
+        //Task<bool> ApplyDiscountForCourse(string discountCode, string courseId);
         Task<bool> CanselApplyDiscount();
     }
 }

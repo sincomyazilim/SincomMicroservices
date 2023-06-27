@@ -13,5 +13,6 @@ namespace FreeCourse.Services.Discount.Services.Abstract
         Task<ResponseDto<NoContent>>Delete(int id);
 
         Task<ResponseDto<Models.Discount>>GetByCodeAndUserId(string code, string userId);//bu kullanıcının  bu code ıle ındımı olmusmu 
+       // Task<ResponseDto<Models.Discount>>GetByCodeAndUserIdAndCourseId(string code, string userId,string courseId);//bu kullanıcının  bu code ıle ındımı olmusmu 
     }
 }

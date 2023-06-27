@@ -1,7 +1,6 @@
 ﻿using FreeCourse.Services.Discount.Services.Abstract;
 using FreeCourse.Shared.ControlerBase;
 using FreeCourse.Shared.Services.Abstract;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -13,11 +12,13 @@ namespace FreeCourse.Services.Discount.Controllers//75
     {
         private readonly IDiscountService _discountService;
         private readonly ISharedIdentityService _sharedIdentityService;
+        
 
         public DiscountsController(IDiscountService discountService, ISharedIdentityService sharedIdentityService)
         {
             _discountService = discountService;
             _sharedIdentityService = sharedIdentityService;
+          
         }
         //-------------------------------------------------------------------------
 
@@ -42,6 +43,24 @@ namespace FreeCourse.Services.Discount.Controllers//75
             var discount=await _discountService.GetByCodeAndUserId(code,userId);
             return CreateActionResultInstance(discount);
         }
+
+
+
+        //[HttpGet]
+        //[Route("/api/[controller]/[action]/{code}")]
+
+        //public async Task<IActionResult> GetByCodeForCourse(string code, string courseId)
+        //{
+        //    //var courseIdFordiscount = await _courseService.GetByIdAsync(courseId);
+        //    var userId = _sharedIdentityService.GetUserId;
+        //    var discount = await _discountService.GetByCodeAndUserIdAndCourseId(code, userId,courseId);
+        //    return CreateActionResultInstance(discount);
+        //}
+
+
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> Save(Models.Discount discount)

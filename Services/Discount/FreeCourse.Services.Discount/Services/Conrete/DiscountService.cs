@@ -52,6 +52,18 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
             return ResponseDto<Models.Discount>.Success(hasdiscount,200);
         }
 
+        //public async Task<ResponseDto<Models.Discount>> GetByCodeAndUserIdAndCourseId(string code, string userId, string courseId)
+        //{// tum seppetekı kurslara ındırım degıld kursa göre ındırım metodu
+        //    var discounts = await _dbconnection.QueryAsync<Models.Discount>("select * from discount1 where userid=@UserId and code=@Code and courseid=@CourseId", new { UserId = userId, Code = code ,CourseId=courseId});
+        //    var hasdiscount = discounts.FirstOrDefault();
+        //    if (hasdiscount == null)
+        //    {
+        //        return ResponseDto<Models.Discount>.Fail("böyle indirim kodu yok", 404);
+
+        //    }
+        //    return ResponseDto<Models.Discount>.Success(hasdiscount, 200);
+        //}
+
         public async Task<ResponseDto<Models.Discount>> GetById(int id)
         {
             var discount = (await _dbconnection.QueryAsync<Models.Discount>("select *from discount where id=@Id", new { Id = id })).SingleOrDefault();

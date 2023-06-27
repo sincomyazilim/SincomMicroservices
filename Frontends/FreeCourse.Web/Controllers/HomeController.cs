@@ -1,4 +1,5 @@
-﻿using FreeCourse.Web.Exceptions;
+﻿using FreeCourse.Shared.Services.Abstract;
+using FreeCourse.Web.Exceptions;
 using FreeCourse.Web.Models;
 using FreeCourse.Web.Services.Abstract;
 using Microsoft.AspNetCore.Diagnostics;
@@ -16,21 +17,29 @@ namespace FreeCourse.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ICatalogService _catalogService;//148
+      private readonly IEgitmenAdiGetirmek _gitmenAdiGetirmek;
 
-        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
+
+
+        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService, IEgitmenAdiGetirmek gitmenAdiGetirmek)
         {
             _logger = logger;
             _catalogService = catalogService;
+            _gitmenAdiGetirmek = gitmenAdiGetirmek;
         }
         //------------------------------------------------
         public async Task<IActionResult> Index()
         {
 
+            var users = await _gitmenAdiGetirmek.GetAllUser();
+            TempData["userList"] = users;
             return View(await _catalogService.GetAllCourseAsync());
         }
 
         public async Task<IActionResult>Detail(string id)
         {
+            var users = await _gitmenAdiGetirmek.GetAllUser();
+            TempData["userList"] = users;
             var detailCourse =await _catalogService.GetByCourseId(id);
             return View(detailCourse);
         }

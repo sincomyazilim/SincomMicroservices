@@ -1,7 +1,10 @@
-﻿@model List<GetCourseViewModel>
+﻿@using FreeCourse.Web.Models.Identit;
+@model List<GetCourseViewModel>
 @{
     ViewData["Title"] = "Home Page";
     var count = 0;
+    List<UsersViewModel> users = TempData["userList"] as List<UsersViewModel>;
+    //TempData.Keep();
 }
 
 <h2>Kurslar</h2>
@@ -23,7 +26,17 @@
                 <img src="@item.StockPictureUrl" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
-                    <div class="badge bg-primary">Kategori : @item.Category.Name</div>
+                    
+                        @foreach (var items in users)
+                        {
+                            @if (item.UserId == items.Id)
+                            {
+                                <div class="badge bg-primary">Eğitmen : @items.UserName  </div>
+                            }
+
+                        }
+                    
+                    <div class="badge bg-primary">  Kategori : @item.Category.Name</div>
                     <p class="card-text">@item.ShortDescription</p>
                     <h4 class="text-primary">@item.Price TL</h4>
 

@@ -24,12 +24,49 @@ namespace FreeCourse.Web.Extensions//154
 
 
 
+            services.AddHttpClient<IEgitmenAdiGetirmek, EgitmenAdiGetirmek>(opt=>{//ben ekledım
+
+                opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUrl);
+            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+
+
+            services.AddHttpClient<IOrderService, OrderService>(opt =>//174 servisler eklenırken htppclıne olarak ıstek yaptıklarında 
+            {//scope olark degıl  services.AddHttpClient<IOrderService, OrderService> şeklınde eklenır.burdan appsettın içine gırıyor ıcınde serviceApiSettings bolumu ,boulum ıcınden Basket,ve onunda ıcınden path secılıyor
+
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Order.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();// order cagrıldgında token kendısı yetkısını gösterecek 
+            //user bılgısı sarı var
+
+
+
+
+            services.AddHttpClient<IFakePaymentService, FakePaymentService>(opt =>//171 servisler eklenırken htppclıne olarak ıstek yaptıklarında 
+            {//scope olark degıl  services.AddHttpClient<IFakePaymentService, FakePaymentService> şeklınde eklenır.burdan appsettın içine gırıyor ıcınde serviceApiSettings bolumu ,boulum ıcınden Basket,ve onunda ıcınden path secılıyor
+
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.FakePayment.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();// basket cagrıldgında token kendısı yetkısını gösterecek 
+            //user bılgısı sarı var
+
+
+
             services.AddHttpClient<IDiscountService, DiscountService>(opt =>//154 servisler eklenırken htppclıne olarak ıstek yaptıklarında 
             {//scope olark degıl  services.AddHttpClient<IBasketService, BasketService> şeklınde eklenır.burdan appsettın içine gırıyor ıcınde serviceApiSettings bolumu ,boulum ıcınden Basket,ve onunda ıcınden path secılıyor
 
                 opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Discount.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();// basket cagrıldgında token kendısı yetkısını gösterecek 
             //user bılgısı sarı var
+
+
+
+
+            //services.AddHttpClient<IDiscountService, DiscountService>(opt =>//154 servisler eklenırken htppclıne olarak ıstek yaptıklarında 
+            //{//scope olark degıl  services.AddHttpClient<IBasketService, BasketService> şeklınde eklenır.burdan appsettın içine gırıyor ıcınde serviceApiSettings bolumu ,boulum ıcınden Basket,ve onunda ıcınden path secılıyor
+
+            //    opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Discount.Path}");
+            //}).AddHttpMessageHandler<ClientCredentialTokenHandler>();// basket cagrıldgında token kendısı yetkısını gösterecek 
+            ////user bılgısı sarı var    not bu kursa her kursa ayrı ayrı ındırım kodu ekleme olsun
+
 
 
 

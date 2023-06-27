@@ -1,6 +1,8 @@
-﻿@model GetCourseViewModel
+﻿@using FreeCourse.Web.Models.Identit;
+@model GetCourseViewModel
 @{
     ViewData["Title"] = "Detail";
+    List<UsersViewModel> users = TempData["userList"] as List<UsersViewModel>;
 }
 
 
@@ -12,7 +14,17 @@
             <img src="@Model.StockPictureUrl" class="card-img-top" />
             <div class="card-body">
                 <div class="badge bg-primary">Kategori : @Model.Category.Name</div>
-                <h5 class="card-title">@Model.Name</h5>                
+                
+                
+                    @foreach (var items in users)
+                    {
+                        @if (Model.UserId == items.Id)
+                        {
+                            <div class="badge bg-primary">Eğitmen : @items.UserName  </div>
+                        }
+
+                    }
+                <h5 class="card-title">@Model.Name</h5>
                 <p class="card-text"> @Model.Description</p>
             </div>
         </div>

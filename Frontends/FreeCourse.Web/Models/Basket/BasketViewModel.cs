@@ -13,7 +13,7 @@ namespace FreeCourse.Web.Models.Basket//152
         public string UserId { get; set; }
         public string DiscountCode { get; set; }//indirimkodu
         public int? DiscountRate { get; set; } = 0;//indirimi oranı
-        public List<BasketItemViewModel> _basketItems { get; set; }
+        private List<BasketItemViewModel> _basketItems;
 
         public List<BasketItemViewModel> BasketItems//sepet içindekı ıtemlerın prceları ındrım uygunamsısa uygulyor
         {

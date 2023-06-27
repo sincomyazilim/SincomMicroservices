@@ -100,7 +100,7 @@
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": ["payment_fullpermission"]
+        "AllowedScopes": ["fakepayment_fullpermission"]
       }
     }
   ],

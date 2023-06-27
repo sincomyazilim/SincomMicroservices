@@ -54,7 +54,7 @@ namespace FreeCourse.Services.FakePayment
 
 
 
-            services.AddControllers();
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeCourse.Services.FakePayment", Version = "v1" });

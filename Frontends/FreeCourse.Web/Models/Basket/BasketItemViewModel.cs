@@ -7,7 +7,7 @@
         public string CourseName { get; set; }
         public decimal Price { get; set; }//gercek fıyatı
         //indirimli kupın ıcın
-        private decimal? DiscountAppliedPrice { get; set; }//ındırım uygulanmıs fıyat
+        private decimal? DiscountAppliedPrice;//ındırım uygulanmıs fıyat
 
         public decimal GetCurrentPrice 
         { 

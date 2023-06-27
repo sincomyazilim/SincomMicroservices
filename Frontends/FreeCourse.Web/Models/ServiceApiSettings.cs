@@ -9,6 +9,8 @@
         public ServiceApi PhotoStock { get; set; }//143 
         public ServiceApi Basket { get; set; }//154
         public ServiceApi Discount { get; set; }//162
+        public ServiceApi FakePayment { get; set; }//171
+        public ServiceApi Order { get; set; }//174
     }
 
     public class ServiceApi//132
