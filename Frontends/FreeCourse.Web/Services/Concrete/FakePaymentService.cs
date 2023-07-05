@@ -16,9 +16,15 @@ namespace FreeCourse.Web.Services.Concrete//171
             _httpClient = httpClient;
         }
         //-----------------------------------------------------------------
-        public async Task<bool> ReceivePayment(FakePaymentInfoInput input)//172
+        public async Task<bool> ReceivePayment(FakePaymentInfoInput input)//172 sekron ıcın
         {
             var response = await _httpClient.PostAsJsonAsync<FakePaymentInfoInput>("fakepayment", input);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ReceiveAsenkronPayment(FakePaymenAsenkrontInfoInput input)//185 asenkron ıcın 
+        {
+            var response = await _httpClient.PostAsJsonAsync<FakePaymenAsenkrontInfoInput>("fakepayment", input);
             return response.IsSuccessStatusCode;
         }
     }

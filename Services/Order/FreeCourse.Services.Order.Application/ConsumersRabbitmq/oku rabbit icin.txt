@@ -1,0 +1,9 @@
+﻿bu kasoru  187  ekledık..burda kurukta olan verılerı order kaydetmek ıcındır
+eklenen paketler MassTransit.AspNetCore     ve MassTransit.RabbitMQ
+
+CreateOrderMessageCommandConsumer  bu sınıf rabitmq dakıkuygrugu dınleyecek kuyrtuk bırsey vars alıp ekleyecek
+
+191
+bu klsore publısherevent kasor ekleıdk ıcınde sııf tanımadık
+
+bu sınıf courseservıste kurs ısmı degısrse evet fırtlacak burdakıler o evet yakalayacak ve kendı productnmae  degıstırecek

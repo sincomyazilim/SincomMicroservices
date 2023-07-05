@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using FreeCourse.Web.Models.Order;
 
 namespace FreeCourse.Web.Models.Order//174
 {
@@ -9,8 +10,8 @@ namespace FreeCourse.Web.Models.Order//174
         public DateTime CreatedDate { get; set; }
 
         //ödeme geçmişi olacagı ııcn bu sınıf adree gerek yok
-       // public AddressDto Address { get; set; }
+        public AddressViewModel Address { get; set; }
         public string BuyerId { get; set; }
-        private List<OrderItemViewModel> OrderItems { get; set; }
+        public List<OrderItemViewModel> OrderItems { get; set; }
     }
 }

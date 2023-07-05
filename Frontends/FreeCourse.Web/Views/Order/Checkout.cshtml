@@ -59,17 +59,17 @@
                 <div class="card-body">
                     <h5 class="card-title">Ödeme özet</h5>
                     <table class="table table-striped">
-                        @foreach (var item in ViewBag.basket.BasketItems as List<BasketItemViewModel>)
+                        @foreach (var item in ViewBag.basket.BasketItems as List<BasketItemViewModel22>)
                         {
                             <tr>
                                 <td>@item.CourseName</td>
-                                <td>@item.Price</td>
+                                <td>@item.Price TL</td>
                             </tr>
                         }
 
                         <tr>
                             <td>@(ViewBag.basket.HasDiscount ? "indirimli toplam fiyat" : "toplam fiyat")</td>
-                            <td>@ViewBag.basket.TotalPrice TL</td>
+                            <td>@ViewBag.basket.TotalCurrentPrice TL</td>
                         </tr>
                     </table>
 

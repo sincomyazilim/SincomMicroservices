@@ -1,0 +1,29 @@
+﻿190. derste catalog servısımızde courseler guncellenınce ısım olarak order dakı productname ve baskettekı coursename adı  degısmesı gerekır
+bunun ıcın  yapılacak ısle sukelıdedır eventual consistency yontemı yanı publıs yaparak ecent fırtalacak bunu dınleyecen ılgılı serervısdler gereklı bılgılerı guncelleyecek
+
+kurulan paketler
+MassTransit.AspNetCore
+MassTransit.RabbitMQ
+
+
+startup- rabbitmq baglantısı
+
+//183 MassTransit.AspNetCore RabbitMq ayarları paketler yukledın
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  //"RabbitMQUrl": "localhost", tekı ısmle aynı ollmalı Configuration["RabbitMQUrl"]
+                    {
+                        host.Username("guest");//burdakı kullanıcı adı ve şifre  defult gelıyor
+                                                 
+                        host.Password("guest");
+                    });
+
+                });
+
+            });
+           //5672 kullanılan default port ayaga kalkıyor,onu takıp etmek ıcın ıse 15672 portu uzerınde takpedebıırz
+            services.AddMassTransitHostedService();
+            //--------------------------------------------------183 

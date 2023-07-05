@@ -1,8 +1,10 @@
+using FreeCourse.Services.Basket.ConsumersRabbitmq.PublisherEvet;
 using FreeCourse.Services.Basket.Services.Abstract;
 using FreeCourse.Services.Basket.Services.Concrete;
 using FreeCourse.Services.Basket.Settings;
 using FreeCourse.Shared.Services.Abstract;
 using FreeCourse.Shared.Services.Concrete;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +37,43 @@ namespace FreeCourse.Services.Basket
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //191 MassTransit.AspNetCore RabbitMq ayarlarý paketler yukledýn
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<CourseNameChangedFotBasketEventConsumer>();//191  evetlarý dýnlemek ýcýn eklýyruz
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  //"RabbitMQUrl": "localhost", teký ýsmle ayný ollmalý Configuration["RabbitMQUrl"]
+                    {
+                        host.Username("guest");//burdaký kullanýcý adý ve þifre  defult gelýyor
+
+                        host.Password("guest");
+                    });
+                    //-------------------------191
+                    cfg.ReceiveEndpoint("course-name-changed-event-basket-service", e =>// burda entpoint tanýmlýyorz ký buraya baglasn
+                    {
+                        e.ConfigureConsumer<CourseNameChangedFotBasketEventConsumer>(context);//  endPoint teki verýlerý okuyoruz
+                    });
+
+                    //-----------------------------------------------------------------------------------
+
+                });
+
+            });
+            //5672 kullanýlan default port ayaga kalkýyor,onu takýp etmek ýcýn ýse 15672 portu uzerýnde takpedebýýrz
+            services.AddMassTransitHostedService();
+            //--------------------------------------------------183 
+
+
+
+
+
+
+
+
+
+
             //userId
             services.AddHttpContextAccessor();//59 ekledýk ký shredtteký býr sýnýfa aýt metot ýdentýye baglanýp ordaký context uerýnden userýd ulasabýlsýn
 

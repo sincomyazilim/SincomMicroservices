@@ -10,3 +10,143 @@ basket,order,discunt,fakepayment mıcro servısler ıse user bılgısı ıle gı
 her ıkısındede sıtek yapıldıgında ya hafızaya gıdıp token bakacak yada cookıden bakıp token alacak aldıktan sonra
 user olmadan alınan token ole hafıda olup olmadıgı yoksa olustur dıyoruz
 user gerektıren token ıse cooıden varmı yokmuu bakılıp ona görre ıslem yapılıyor
+
+
+
+
+
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">indirim kuponu </h5>
+                <hr />
+                <form asp-controller="Home" asp-action="ApplyDiscountCourse">
+                   @* @if (Model.HasDiscount)
+                    {
+                        <div class="alert alert-success">
+                            "@Model.DiscountCode"  indirim kodu uygulandı
+                            <a asp-controller="Basket" asp-action="CanselApplyiedDiscount"> (iptal et)</a>
+                        </div>
+
+                    }*@
+                   
+                    <div class="input-group mb-3">
+                       
+                        @*<input type="hidden"  asp-for="Id"   name="DiscounCoursetApplyInputCodeAndCourseId.CourseId"/>*@
+                        <input type="text" class="form-control" name="DiscounCoursetApplyInputCodeAndCourseId.Code">
+                        <button class="btn btn-outline-secondary" type="submit">Uygula</button>
+                    </div>
+                    @*------------------------------------------------------------------------------------------------------------------*@
+                    @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)
+                    {
+                        <div class="text-danger">indirim kodu geçersiz</div>
+                    }
+                    @if (TempData["discountError"] != null) @*167 hata kodu ekledık*@
+                    {
+                        <div class="text-danger">@TempData["discountError"]</div>
+                    }
+                </form>
+            </div>
+        </div>
+        <br />
+
+
+
+        basket ındex
+        --------------------------
+
+
+
+        @model BasketViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="row">
+
+    <div class="col-md-8 offset-md-2">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h5 class="card-title">Sepet</h5>
+
+                @if (Model != null && Model.BasketItems.Any())
+                {
+                    <table class="table table-striped">
+
+                        <tr>
+                            <th>Kurs isim</th>
+                            <th>Kurs fiyat</th>
+                            <th>İşlemler</th>
+                        </tr>
+
+                        @foreach (var item in Model.BasketItems)
+                        {
+                            <tr>
+                                <td>@item.CourseName</td>
+                                <td>
+                                    @item.GetCurrentPrice TL @(Model.HasDiscount ? $"(%{Model.DiscountRate.Value} uygulandı)" : "")
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" asp-controller="Basket" asp-action="RemoveBasketItem" asp-route-courseId="@item.CourseId">sil</a>
+                                </td>
+                            </tr>
+                        }
+
+                        @if (Model.HasDiscount)
+                        {
+
+                            <tr>
+                                <td>Indirim oranı</td>
+                                <th colspan="2"> % @Model.DiscountRate.Value</th>  
+                                @*<th colspan="2"> anlamı 1 satırda  3 stun var bu kod 2 v3 sutunu bırlestırı*@
+                            </tr>
+
+                        }
+
+                        <tr>
+                            <td>@(Model.HasDiscount ? "İndirimli fiyat" : "Toplam fiyat")</td>
+                            <th colspan="2">@Model.TotalPrice TL</th>
+                        </tr>
+                    </table>
+
+                    <form asp-controller="Basket" asp-action="ApplyDiscount">
+                        @if (Model.HasDiscount)
+                        {
+                            <div class="alert alert-success">
+                                "@Model.DiscountCode"  indirim kodu uygulandı
+                                <a asp-controller="Basket" asp-action="CanselApplyiedDiscount"> (iptal et)</a>
+                            </div>
+
+                        }
+  @* burdan kulanııc kodu gırecek name="DiscountApplyInputCode.Code" uzerınden basket kotroldekı ApplyDiscount metudunda cagıracak kodu uygulayacak*@
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="DiscountApplyInputCode.Code">
+                            <button class="btn btn-outline-secondary" type="submit">Uygula</button>
+                        </div>
+  @*------------------------------------------------------------------------------------------------------------------*@
+                        @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)
+                        {
+                            <div class="text-danger">indirim kodu geçersiz</div>
+                        }
+                        @if (TempData["discountError"] != null) @*167 hata kodu ekledık*@
+                        {
+                            <div class="text-danger">@TempData["discountError"]</div>
+                        }
+                    </form>
+                    <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Ödeme bilgileri</a>
+                    <a class="btn btn-warning" asp-controller="Home" asp-action="Index">Kursları incelemeye devam et</a>
+                }
+                else
+                {
+                    <div class="alert alert-info">Sepet boş</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@*157 167 guncellendı eklemeler yapıldı *@

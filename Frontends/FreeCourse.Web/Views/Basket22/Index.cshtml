@@ -1,0 +1,138 @@
+﻿@model BasketViewModel22
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+
+    <div class="col-md-12 offset-md">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h5 class="card-title">Sepet</h5>
+
+                @if (Model != null && Model.BasketItems.Any())
+                {
+                    <table class="table table-striped">
+
+                        <tr>
+                            <th>Kurs isim</th>
+                            <th>Kurs fiyat</th>
+                            <th>İndirimli fiyatı</th>
+                            <th>İndirim oranı</th>
+                            <th>İndirim kuponu gir</th>
+                            <th>İşlemler</th>
+
+                        </tr>
+
+                        @foreach (var item in Model.BasketItems)
+                        {
+                            <tr>
+                                <td>@item.CourseName</td>
+                                <td>
+                                    @item.Price TL
+                                </td>
+                                <td>
+                                    @((item.Status) ? $"{item.GetCurrentPrice} TL'ye  indi" : "Tanımlı indirimi yok")
+
+                                </td>
+
+                                @if (Model.Status)
+                                {
+                                    <td>
+                                        % @((item.Price - item.GetCurrentPrice) * 100 / item.Price)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td> % @((item.Price - item.GetCurrentPrice) * 100 / item.Price)</td>
+
+
+                                }
+
+                                <td>
+                                    <form asp-controller="Basket22" asp-action="ApplyDiscount">
+
+                                        @if (item.Status)
+                                        {
+
+                                            @foreach (var item2 in item.Degerler)
+                                            {
+                                                @if (item.CourseId == item2.CourseId)
+                                                {
+
+                                                    <div class="alert alert-success">
+                                                        "@item2.CourseCode"  indirim kodu uygulandı
+                                                        <a asp-controller="Basket22" asp-action="RemoveBasketItemDegerleriIptal" asp-route-courseId="@item.CourseId"> (iptal et)</a>
+                                                    </div>
+
+                                                }
+                                            }
+
+
+
+                                        }
+                                        else
+                                        {
+
+
+                                            <div class="input-group mb-3">
+                                                <input type="hidden" asp-for="@item.CourseId" name="DiscountApplyInputCode.CourseId">
+                                                <input type="text" class="form-control" name="DiscountApplyInputCode.Code">
+                                                <button class="btn btn-outline-secondary" type="submit">Uygula</button>
+                                            </div>
+                                            @*------------------------------------------------------------------------------------------------------------------*@
+
+                                        }
+                                    </form>
+
+
+                                <td>
+                                    <a class="btn btn-danger" asp-controller="Basket22" asp-action="RemoveBasketItem" asp-route-courseId="@item.CourseId">sil</a>
+                                </td>
+
+
+
+
+                            </tr>
+                        }
+
+
+                        <tr>
+                            <th colspan="2">Toplam Fiyat : @Model.TotalPrice TL  </th>
+
+
+                            <th colspan="2" class="text-danger"> İndirimli Fiyat : @Model.TotalCurrentPrice TL</th>
+
+
+                            <th colspan="4">
+                                @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)
+                                {
+                                    <div class="text-danger">indirim kodu geçersiz veya bu kursa ait değil</div>
+                                }
+                                @if (TempData["discountError"] != null) @*167 hata kodu ekledık*@
+                                {
+                                    <div class="text-danger">@TempData["discountError"]</div>
+                                }
+                            </th>
+                        </tr>
+
+
+
+                    </table>
+
+
+                    <a class="btn btn-success" asp-controller="Order" asp-action="Checkout">Ödeme bilgileri</a>
+                    <a class="btn btn-dark" asp-controller="Order" asp-action="CheckoutAsekron">Ödeme ASENKRON bilgileri</a>
+                    <a class="btn btn-warning" asp-controller="Home" asp-action="Index">Kursları incelemeye devam et</a>
+                }
+                else
+                {
+                    <div class="alert alert-info">Sepet boş</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

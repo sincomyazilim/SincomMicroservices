@@ -4,6 +4,8 @@ using FreeCourse.Services.Catalog.Models;
 using FreeCourse.Services.Catalog.Services.Abstract;
 using FreeCourse.Services.Catalog.Settings.Abstract;
 using FreeCourse.Shared.Dtos;
+using FreeCourse.Shared.Messages.PublisherEvent;
+using MassTransit;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +19,16 @@ namespace FreeCourse.Services.Catalog.Services.Concrete//25
         private readonly IMongoCollection<Category> _categoryCollection;
         private readonly IMapper _mapper;
 
-        public CourseService(IMapper mapper, IDatabaseSettings databaseSettings)
+        private readonly IPublishEndpoint _publishEndpoint;//190 burası evet olusturup rabbıtmq da publıs edecek  bu yapılan ıslem dıger ılgılı servılser dınleyecek onları baglayan bır guncelleme varsa ıslem yapacaklar
+
+        public CourseService(IMapper mapper, IDatabaseSettings databaseSettings, IPublishEndpoint publishEndpoint)
         {
             var client = new MongoClient(databaseSettings.ConnectionString);//mongo db clınet olsutur ve baglan
             var database = client.GetDatabase(databaseSettings.DatabaseName);
             _courseCollection = database.GetCollection<Course>(databaseSettings.CourseCollectionName);//course tablosuna baglan
             _categoryCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);//category tbl baglan
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
         }
         //--------------------------------------------------------------------------------
 
@@ -85,8 +90,23 @@ namespace FreeCourse.Services.Catalog.Services.Concrete//25
 
             if (result==null)
             {
-                return ResponseDto<NoContent>.Fail("Bukurs kayıtlı degıl", 404);
+                return ResponseDto<NoContent>.Fail("Bu kurs kayıtlı degıl", 404);
             }
+            //190----------------------------------------------------------------------------
+            await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent
+            {
+                CourseId = updateCourse.Id,       //bu kısım kurs ısmı degıstıınde evet fırtlaacak yerdır kuyruk olusturacak rabbıtmq da
+                UpdateName = updateCourse.Name,
+            });
+            //-----------------------------------------------------------
+            await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent
+            {
+                CourseId = updateCourse.Id,       //bu kısım kurs ısmı degıstıınde evet fırtlaacak yerdır kuyruk olusturacak rabbıtmq da
+                UpdateName = updateCourse.Name,
+            });
+            //-----------------------------------------------------------
+
+
             return ResponseDto<NoContent>.Success(204);
         }
 

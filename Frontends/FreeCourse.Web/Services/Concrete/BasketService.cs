@@ -33,10 +33,17 @@ namespace FreeCourse.Web.Services.Concrete//154
             }
             else//eger basket bos geldıyse yanıyoktur
             {
+                basket = new BasketViewModel();
+                
                 basket.BasketItems.Add(basketItemViewModel);
-                //basket = new BasketViewModel{ 
-                //    BasketItems=new System.Collections.Generic.List<BasketItemViewModel> { basketItemViewModel }
-                //BU KOD KULLANMIYORUM CUNKU BasketViewModel NEWLENDIGINDE CTOR METODUNA  _basketItems = new List<BasketItemViewModel>(); EKLIYORUZ
+              
+                //basket = new BasketViewModel
+                //{//BU KOD KULLANMIYORUM CUNKU BasketViewModel NEWLENDIGINDE CTOR METODUNA  _basketItems = new List<BasketItemViewModel>(); EKLIYORUZ
+                //    BasketItems = new System.Collections.Generic.List<BasketItemViewModel> 
+                //    { 
+                //        basketItemViewModel 
+                //    }
+                    
                 //};
 
 
@@ -46,60 +53,33 @@ namespace FreeCourse.Web.Services.Concrete//154
         //-----------------------------------------------------------------------------------------------------------------------
         public async Task<bool> ApplyDiscount(string discountCode)//164 doldurudk dıscount olusturdukondan sonra
         {
-            await CanselApplyDiscount();//daha önce ındıırm olmussa ıptalet
-            var basket= await GetBasket();
+            //await CanselApplyDiscount();//daha önce ındıırm olmussa ıptalet
+            var basket = await GetBasket();
             if (basket == null)
             {
                 return false;
             }
-            var hasdiscount=await _discountService.GetDiscount(discountCode);
+            var hasdiscount = await _discountService.GetDiscount(discountCode);
             if (hasdiscount == null)
             {
                 return false;
             }
-            basket.ApplyDiscount (hasdiscount.Code, hasdiscount.Rate);//sepetı guncellıyoruz bunada metot yazıyoruz 167
-         
+            
+            basket.BasketItems.ForEach(x =>
+            {
+                if(x.CourseId==hasdiscount.CourseId)
+                {
+                    basket.ApplyDiscount(hasdiscount.CourseId, hasdiscount.Code, hasdiscount.Rate,hasdiscount.Status);
+                }
+
+
+            });
+
+            //basket.ApplyDiscount(hasdiscount.Code, hasdiscount.Rate, hasdiscount.CourseId);  //sepetı guncellıyoruz bunada metot yazıyoruz 167
+
             await SaveOrUpdateBasket(basket);//son halınıkayıt veye update edıyoruz
             return true;
         }
-
-
-
-
-        //public async Task<bool> ApplyDiscountForCourse(string discountCode,string courseId)//tek derse göre ındırımkodu uretmek
-        //{
-        //    await CanselApplyDiscount();//daha önce ındıırm olmussa ıptalet
-        //    var basket = await GetBasket();
-        //    if (basket == null)
-        //    {
-        //        return false;
-        //    }
-        //    var discountApplyInputCodeAndCourseId = new DiscountApplyInputCodeAndCourseId { Code = discountCode, CourseId = courseId };
-
-        //    var hasdiscount = await _discountService.GetDiscountForCourse(discountApplyInputCodeAndCourseId);
-        //    if (hasdiscount == null)
-        //    {
-        //        return false;
-        //    }
-        //    basket.ApplyDiscount(hasdiscount.Code, hasdiscount.Rate);//sepetı guncellıyoruz bunada metot yazıyoruz 167
-
-        //    await SaveOrUpdateBasket(basket);//son halınıkayıt veye update edıyoruz
-        //    return true;
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

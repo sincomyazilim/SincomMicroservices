@@ -1,0 +1,7 @@
+﻿bu klasordekı  sınıflar rabıtMQ mass-transıt yapısını işlyorolacak 
+
+
+2 sekılde oluyor 
+
+1. command
+2.evet(publish) bır event yazılıyor ve fırtaltılıyor ılgılı servıslerdede dınleme sınıfı oluyor onunla baglantısı varsa otomatık ıslem yaılıyor bu olaya eventual consistency

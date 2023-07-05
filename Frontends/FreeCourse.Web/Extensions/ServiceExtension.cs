@@ -21,6 +21,7 @@ namespace FreeCourse.Web.Extensions//154
             services.AddScoped<ISharedIdentityService, SharedIdentityService>();//134 bunu tanılıyoruz ıdentıty userId almak ıcın            
 
             services.AddScoped<IClientCredentialTokenService, ClientCredentialTokenService>();//135 ClientCredentialTokenService tanımlıyoruz 
+            
 
 
 
@@ -28,6 +29,14 @@ namespace FreeCourse.Web.Extensions//154
 
                 opt.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUrl);
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
+           
+
+
+
+
+
+
 
 
 
@@ -67,7 +76,12 @@ namespace FreeCourse.Web.Extensions//154
             //}).AddHttpMessageHandler<ClientCredentialTokenHandler>();// basket cagrıldgında token kendısı yetkısını gösterecek 
             ////user bılgısı sarı var    not bu kursa her kursa ayrı ayrı ındırım kodu ekleme olsun
 
+            services.AddHttpClient<IBasketService22, BasketService22>(opt =>//154 servisler eklenırken htppclıne olarak ıstek yaptıklarında 
+            {//scope olark degıl  services.AddHttpClient<IBasketService, BasketService> şeklınde eklenır.burdan appsettın içine gırıyor ıcınde serviceApiSettings bolumu ,boulum ıcınden Basket,ve onunda ıcınden path secılıyor
 
+                opt.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Basket.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();// basket cagrıldgında token kendısı yetkısını gösterecek 
+            //user bılgısı sarı var
 
 
 

@@ -26,7 +26,7 @@ namespace FreeCourse.Web.Controllers//156
             var basket = await _basketService.GetBasket();
             return View(basket);
         }
-
+       
         public async Task<IActionResult> AddBasketItem(string courseId)
         {
             var course = await _catalogService.GetByCourseId(courseId);//kursu secttık kurs bılgısı elımde
@@ -47,11 +47,14 @@ namespace FreeCourse.Web.Controllers//156
             await _basketService.RemoveBasketItem(courseId);
             return RedirectToAction(nameof(Index));
         }
+       
+
+
         public async Task<IActionResult> ApplyDiscount(DiscountApplyInputCode discountApplyInputCode)//165
         {
             if (!ModelState.IsValid)//167 kupon gırılmezse verılecek hata 
             {
-                TempData["discountError"]=ModelState.Values.SelectMany(x=>x.Errors).Select(x=>x.ErrorMessage).First();
+                TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
                 return RedirectToAction(nameof(Index));
             }
 
@@ -59,21 +62,6 @@ namespace FreeCourse.Web.Controllers//156
             TempData["discountStatus"] = discountStatus;//budurumu temdata saklıyoruzkı hafızada kalsın kı baskyerd e ıptal etmek ıcın kullanabılılelm
             return RedirectToAction(nameof(Index));
         }
-
-
-        ////tek course göre ındırım
-        //public async Task<IActionResult> ApplyDiscountForCourse(DiscountApplyInputCodeAndCourseIdControl discountApplyInputCodeAndCourseIdControl)
-        //{
-        //    if (!ModelState.IsValid)//167 kupon gırılmezse verılecek hata 
-        //    {
-        //        TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    var discountStatus = await _basketService.ApplyDiscountForCourse(discountApplyInputCodeAndCourseIdControl.Code, discountApplyInputCodeAndCourseIdControl.CourseId);//bu metotda dırk seepet guncelıyor 
-        //    TempData["discountStatus"] = discountStatus;//budurumu temdata saklıyoruzkı hafızada kalsın kı baskyerd e ıptal etmek ıcın kullanabılılelm
-        //    return RedirectToAction(nameof(Index));
-        //}
 
 
 
@@ -84,4 +72,3 @@ namespace FreeCourse.Web.Controllers//156
         }
     }
 }
-//DiscountApplyInputCode

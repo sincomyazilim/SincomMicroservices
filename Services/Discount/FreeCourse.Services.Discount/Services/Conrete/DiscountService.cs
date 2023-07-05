@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using FreeCourse.Services.Discount.Dtos;
 using FreeCourse.Services.Discount.Services.Abstract;
 using FreeCourse.Shared.Dtos;
 using Microsoft.Extensions.Configuration;
@@ -24,17 +25,17 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
         //------------------------------------------------------------------------------------------------
         public async Task<ResponseDto<NoContent>> Delete(int id)
         {
-            var deletedDiscount=await _dbconnection.ExecuteAsync("delete from discount where id=@Id",new { Id=id });
+            var deletedDiscount=await _dbconnection.ExecuteAsync("delete from discounteski where id=@Id",new { Id=id });
             return deletedDiscount > 0 ? ResponseDto<NoContent>.Success(204) : ResponseDto<NoContent>.Fail("indirim kodu bulunmadı", 404);
         }
 
-        public async Task<ResponseDto<List<Models.Discount>>> GetAll()
+        public async Task<ResponseDto<List<Models.DiscountEski>>> GetAll()
         {//dapper kodu ıle getall yapıyoıruz
-            var discounts = await _dbconnection.QueryAsync<Models.Discount>("Select *from discount");
-            return ResponseDto<List<Models.Discount>>.Success(discounts.ToList(), 200);
+            var discounts = await _dbconnection.QueryAsync<Models.DiscountEski>("Select *from discounteski");
+            return ResponseDto<List<Models.DiscountEski>>.Success(discounts.ToList(), 200);
         }
 
-        public async Task<ResponseDto<Models.Discount>> GetByCodeAndUserId(string code, string userId)
+        public async Task<ResponseDto<Models.DiscountEski>> GetByCodeAndUserId(string code, string userId)
         {
             //var discounts=await _dbconnection.QueryAsync<Models.Discount>("select * from discount where userid@UserId and code=@Code", new 
             //{
@@ -42,41 +43,46 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
             //    UserId=userId 
             //});
 
-            var discounts = await _dbconnection.QueryAsync<Models.Discount>("select * from discount where userid=@UserId and code=@Code", new { UserId = userId, Code = code });
+            var discounts = await _dbconnection.QueryAsync<Models.DiscountEski>("select * from discounteski where userid=@UserId and code=@Code", new { UserId = userId, Code = code });
+           
             var hasdiscount = discounts.FirstOrDefault();
             if (hasdiscount == null)
             {
-                return ResponseDto<Models.Discount>.Fail("böyle indirim kodu yok", 404);                   
+                return ResponseDto<Models.DiscountEski>.Fail("böyle indirim kodu yok", 404);                   
 
             }
-            return ResponseDto<Models.Discount>.Success(hasdiscount,200);
+            return ResponseDto<Models.DiscountEski>.Success(hasdiscount,200);
         }
+        //-------------------------------------------------------------------------------------------------------------------------------------------
+        //public async Task<ResponseDto<Models.DiscountEski>> GetByCodeAndUserIdandCourseId(string userId, GetCodeandCorseIdDto getCodeandCorseIdDto)
+        //{
 
-        //public async Task<ResponseDto<Models.Discount>> GetByCodeAndUserIdAndCourseId(string code, string userId, string courseId)
-        //{// tum seppetekı kurslara ındırım degıld kursa göre ındırım metodu
-        //    var discounts = await _dbconnection.QueryAsync<Models.Discount>("select * from discount1 where userid=@UserId and code=@Code and courseid=@CourseId", new { UserId = userId, Code = code ,CourseId=courseId});
+
+        //    var discounts = await _dbconnection.QueryAsync<Models.DiscountEski>("select * from discounteski where userid=@UserId and code=@Code and courseId=@courseId", new { UserId = userId, Code = getCodeandCorseIdDto.Code, getCodeandCorseIdDto.CourseId });
         //    var hasdiscount = discounts.FirstOrDefault();
         //    if (hasdiscount == null)
         //    {
-        //        return ResponseDto<Models.Discount>.Fail("böyle indirim kodu yok", 404);
+        //        return ResponseDto<Models.DiscountEski>.Fail("böyle indirim kodu yok", 404);
 
         //    }
-        //    return ResponseDto<Models.Discount>.Success(hasdiscount, 200);
+        //    return ResponseDto<Models.DiscountEski>.Success(hasdiscount, 200);
         //}
+        //-------------------------------------------------------------------------------------------------------------------------------------------------
 
-        public async Task<ResponseDto<Models.Discount>> GetById(int id)
+
+        public async Task<ResponseDto<Models.DiscountEski>> GetById(int id)
         {
-            var discount = (await _dbconnection.QueryAsync<Models.Discount>("select *from discount where id=@Id", new { Id = id })).SingleOrDefault();
+            var discount = (await _dbconnection.QueryAsync<Models.DiscountEski>("select *from discounteski where id=@Id", new { Id = id })).SingleOrDefault();
             if (discount == null)
             {
-                return ResponseDto<Models.Discount>.Fail("indirim bulunamadı", 404);
+                return ResponseDto<Models.DiscountEski>.Fail("indirim bulunamadı", 404);
             }
-            return ResponseDto<Models.Discount>.Success(discount, 200);
+            return ResponseDto<Models.DiscountEski>.Success(discount, 200);
         }
 
-        public async Task<ResponseDto<NoContent>> Save(Models.Discount discount)
+        public async Task<ResponseDto<NoContent>> Save(Models.DiscountEski discount)
         {
-            var saveStatus = await _dbconnection.ExecuteAsync("INSERT INTO discount(userid,rate,code)VALUES(@UserId,@Rate,@Code)", discount);// burda kendısı maplame ozellıgı oldugu ıcın virgülden sonra discount koduk 
+            var saveStatus = await _dbconnection.ExecuteAsync("INSERT INTO discounteski(userid,rate,code)VALUES(@UserId,@Rate,@Code)", discount);// burda kendısı maplame ozellıgı oldugu ıcın virgülden sonra discount koduk 
             if (saveStatus > 0)
             {
                 return ResponseDto<NoContent>.Success(204);
@@ -84,7 +90,7 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
             return ResponseDto<NoContent>.Fail("Eklenemedi veritabanına, ayaktamı?", 500);
         }
 
-        public async Task<ResponseDto<NoContent>> Update(Models.Discount discount)
+        public async Task<ResponseDto<NoContent>> Update(Models.DiscountEski discount)
         {
             
 
@@ -96,7 +102,7 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
                 //    Rate = discount.Rate
                 //});// burda kendımmız maplemye bırakmadan kendımız eslestırdık.. ıstedıgımızı kullaanbılırız
 
-            var updateStatus = await _dbconnection.ExecuteAsync("update discount set userid=@UserId, code=@Code, rate=@Rate where id=@Id", new { Id = discount.Id, UserId = discount.UserId, Code = discount.Code, Rate = discount.Rate });
+            var updateStatus = await _dbconnection.ExecuteAsync("update discounteski set userid=@UserId, code=@Code, rate=@Rate where id=@Id", new { Id = discount.Id, UserId = discount.UserId, Code = discount.Code, Rate = discount.Rate });
             if (updateStatus > 0)
                 {
                     return ResponseDto<NoContent>.Success(204);

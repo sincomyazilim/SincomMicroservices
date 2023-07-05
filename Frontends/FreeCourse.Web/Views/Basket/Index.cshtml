@@ -22,6 +22,8 @@
                         <tr>
                             <th>Kurs isim</th>
                             <th>Kurs fiyat</th>
+                            <th>İndirimli fiyatı</th>
+                            <th>Yüzdelik oran</th>
                             <th>İşlemler</th>
                         </tr>
 
@@ -30,8 +32,29 @@
                             <tr>
                                 <td>@item.CourseName</td>
                                 <td>
-                                    @item.GetCurrentPrice TL @(Model.HasDiscount ? $"(%{Model.DiscountRate.Value} uygulandı)" : "")
+                                    @item.Price TL
                                 </td>
+                                <td>
+                                    @((Model.HasDiscount) ? $"{item.GetCurrentPrice} TL'ye  indi" : "Tanımlı indirimi yok")
+
+                                </td>
+
+                                @if (Model.Status)
+                                {
+                                    <td>
+                                        % @((item.Price - item.GetCurrentPrice) * 100 / item.Price)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td> % @((item.Price - item.GetCurrentPrice) * 100 / item.Price)</td>
+
+
+                                }
+
+
+
+
                                 <td>
                                     <a class="btn btn-danger" asp-controller="Basket" asp-action="RemoveBasketItem" asp-route-courseId="@item.CourseId">sil</a>
                                 </td>
@@ -43,8 +66,8 @@
 
                             <tr>
                                 <td>Indirim oranı</td>
-                                <th colspan="2"> % @Model.DiscountRate.Value</th>  
-                                @*<th colspan="2"> anlamı 1 satırda  3 stun var bu kod 2 v3 sutunu bırlestırı*@
+                                <th colspan="2"> % @Model.DiscountRate.Value</th>
+
                             </tr>
 
                         }
@@ -59,17 +82,17 @@
                         @if (Model.HasDiscount)
                         {
                             <div class="alert alert-success">
-                                "@Model.DiscountCode"  indirim kodu uygulandı
+                                "@Model.CourseIdForBasket"  "@Model.DiscountCode"  indirim kodu uygulandı
                                 <a asp-controller="Basket" asp-action="CanselApplyiedDiscount"> (iptal et)</a>
                             </div>
 
                         }
-  @* burdan kulanııc kodu gırecek name="DiscountApplyInputCode.Code" uzerınden basket kotroldekı ApplyDiscount metudunda cagıracak kodu uygulayacak*@
+                        @* burdan kulanııc kodu gırecek name="DiscountApplyInputCode.Code" uzerınden basket kotroldekı ApplyDiscount metudunda cagıracak kodu uygulayacak*@
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="DiscountApplyInputCode.Code">
                             <button class="btn btn-outline-secondary" type="submit">Uygula</button>
                         </div>
-  @*------------------------------------------------------------------------------------------------------------------*@
+                        @*------------------------------------------------------------------------------------------------------------------*@
                         @if (TempData["discountStatus"] != null && (bool)TempData["discountStatus"] == false)
                         {
                             <div class="text-danger">indirim kodu geçersiz</div>

@@ -6,6 +6,7 @@ namespace FreeCourse.Web.Services.Abstract//162
     public interface IDiscountService
     {
         Task<DiscountViewModel> GetDiscount(string discountCode);
-        //Task<DiscountForCourseViewModel> GetDiscountForCourse(DiscountApplyInputCodeAndCourseId model);
+        //Task<DiscountViewModel> GetDiscount(DiscountApplyInputCode discountApplyInputCode);
+       
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FreeCourse.Web.Models.Catalog;
+using FreeCourse.Web.Models.DiscountCourse;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,6 +16,12 @@ namespace FreeCourse.Web.Services.Abstract//130
         Task<bool> CreateCourseAsync(CreateCourseInput createCourseInput);
         Task<bool> UpdateCourseAsync(UpdateCourseInput updateCourseInput);
         Task<bool> DeleteCourseAsync(string courseId);
+
+
+
+
+        Task<bool> ApplyDiscountCourse(DiscountCourseViewModelInput discountCourseViewModelInput);
+        Task<bool> CanselApplyDiscountCourse();
 
     }
 }

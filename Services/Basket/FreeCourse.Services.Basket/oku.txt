@@ -1,1 +1,5 @@
 ﻿basket mıcroservıs redıs verıtabanını kullanıyor
+
+191 v hoc ödev verıyor verdıgı odem  kurs ısmı degısrse baskettekı var olan kursun adıda degısısn 
+bunun ıcın rabıtmq kullanılaak zaten benzer yapı order kuruldu
+

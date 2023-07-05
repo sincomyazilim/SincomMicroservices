@@ -4,6 +4,7 @@ using FreeCourse.Services.Catalog.Settings.Abstract;
 using FreeCourse.Services.Catalog.Settings.Concrete;
 using FreeCourse.Shared.Services.Abstract;
 using FreeCourse.Shared.Services.Concrete;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,33 @@ namespace FreeCourse.Services.Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //190 MassTransit.AspNetCore RabbitMq ayarlarý paketler yukledýn
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  //"RabbitMQUrl": "localhost", teký ýsmle ayný ollmalý Configuration["RabbitMQUrl"]
+                    {
+                        host.Username("guest");//burdaký kullanýcý adý ve þifre  defult gelýyor
+
+                        host.Password("guest");
+                    });
+
+                });
+
+            });
+            //5672 kullanýlan default port ayaga kalkýyor,onu takýp etmek ýcýn ýse 15672 portu uzerýnde takpedebýýrz
+            services.AddMassTransitHostedService();
+            //--------------------------------------------------190
+
+
+
+
+
+
+
+
             //41 burda authentication tanýmlýyoruz ayrý ktamanda olan proje kendý ayaga kalkýyor ve ordan dagýtýlan authentoýn ýle ayar verýyrouz
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {

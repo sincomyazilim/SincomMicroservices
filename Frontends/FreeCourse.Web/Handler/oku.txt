@@ -1,0 +1,4 @@
+﻿bu klasorde olan ıkı sınıf client credentialTokenHandlar bu user bilgisi olmadan görelebılecek yerlere ızın saglıyor örnek catalog(course ve catagory)
+phptoc_stoc  ulasabılelır 
+
+ResourceOwnerPasswordTokenHandler bu sınıf  ıse token alıken sıfre ve kullanıcı bılgılerı mevcutr  gırıs yapamadan bunlara ualasılmıyor ornek basket,order,dısckon 

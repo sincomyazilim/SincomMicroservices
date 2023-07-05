@@ -7,11 +7,12 @@
         public string CourseName { get; set; }
         public decimal Price { get; set; }//gercek fıyatı
         //indirimli kupın ıcın
-        private decimal? DiscountAppliedPrice;//ındırım uygulanmıs fıyat
+        public decimal? DiscountAppliedPrice;//ındırım uygulanmıs fıyat
 
         public decimal GetCurrentPrice 
-        { 
-            get=>DiscountAppliedPrice!=null?DiscountAppliedPrice.Value:Price;//indirim uygulanmıssa ındırımlı fıyat yok gercek fıyat
+        {
+            get => DiscountAppliedPrice!=null?DiscountAppliedPrice.Value: Price;//indirim uygulanmıssa ındırımlı fıyat yok gercek fıyat
+            //get => DiscountAppliedPrice!=null?DiscountAppliedPrice.Value: DiscountAppliedPrice.Value;//indirim uygulanmıssa ındırımlı fıyat yok gercek fıyat
                 
         }
 

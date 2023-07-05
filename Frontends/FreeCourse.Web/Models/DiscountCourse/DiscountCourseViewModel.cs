@@ -1,6 +1,6 @@
-﻿namespace FreeCourse.Web.Models.Discount
+﻿namespace FreeCourse.Web.Models.DiscountCourse
 {
-    public class DiscountForCourseViewModel
+    public class DiscountCourseViewModel
     {
         public string UserId { get; set; }
         public int Rate { get; set; }

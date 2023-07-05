@@ -38,7 +38,7 @@ namespace FreeCourse.Services.Basket.Controllers//60
         [HttpPost]
         public async Task<IActionResult>SaveOrdUpdateBasket(BasketDto basketDto)
         {
-            basketDto.UserId = _isharedIdentityService.GetUserId;//154 uuserId burdan gönderıyoırum tekrar consume tmeye gerek yok
+            basketDto.UserId =_isharedIdentityService.GetUserId;//154 uuserId burdan gönderıyoırum tekrar consume tmeye gerek yok
             var response=await _ibasketService.SaveOrUpdate(basketDto);
             return CreateActionResultInstance(response);
         }

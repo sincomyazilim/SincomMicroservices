@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
+using MassTransit;
 
 namespace FreeCourse.Services.FakePayment
 {
@@ -29,6 +30,29 @@ namespace FreeCourse.Services.FakePayment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //183 MassTransit.AspNetCore RabbitMq ayarlarý paketler yukledýn
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  //"RabbitMQUrl": "localhost", teký ýsmle ayný ollmalý Configuration["RabbitMQUrl"]
+                    {
+                        host.Username("guest");//burdaký kullanýcý adý ve þifre  defult gelýyor
+                                                 
+                        host.Password("guest");
+                    });
+
+                });
+
+            });
+           //5672 kullanýlan default port ayaga kalkýyor,onu takýp etmek ýcýn ýse 15672 portu uzerýnde takpedebýýrz
+            services.AddMassTransitHostedService();
+            //--------------------------------------------------183   
+
+
+
+
             //giriþ için
 
             var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();//101 giriþ yapýmýs user býlgýsý sartý ve token alacak 

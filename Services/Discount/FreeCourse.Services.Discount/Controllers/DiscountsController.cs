@@ -1,4 +1,5 @@
-﻿using FreeCourse.Services.Discount.Services.Abstract;
+﻿using FreeCourse.Services.Discount.Dtos;
+using FreeCourse.Services.Discount.Services.Abstract;
 using FreeCourse.Shared.ControlerBase;
 using FreeCourse.Shared.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FreeCourse.Services.Discount.Controllers//75
 {
+    [ApiVersion("1.0")]//bunu ekeldım api ye lınkte sınıf gnderek ıcın https://www.youtube.com/watch?v=x0W2cYy5tIw bunu uyguladım
     [Route("api/[controller]")]
     [ApiController]
     public class DiscountsController : CustomBaseController
@@ -27,6 +29,9 @@ namespace FreeCourse.Services.Discount.Controllers//75
         {
             return CreateActionResultInstance(await _discountService.GetAll());
         }
+       
+        
+        
         // localhost/api/discount/5
         [HttpGet("{id}")]
         public async Task<IActionResult>GetById(int id)
@@ -34,6 +39,9 @@ namespace FreeCourse.Services.Discount.Controllers//75
             var discount=await _discountService.GetById(id);
             return CreateActionResultInstance(discount);
         }
+       
+        
+        
         [HttpGet]
         [Route("/api/[controller]/[action]/{code}")]
         
@@ -46,16 +54,7 @@ namespace FreeCourse.Services.Discount.Controllers//75
 
 
 
-        //[HttpGet]
-        //[Route("/api/[controller]/[action]/{code}")]
-
-        //public async Task<IActionResult> GetByCodeForCourse(string code, string courseId)
-        //{
-        //    //var courseIdFordiscount = await _courseService.GetByIdAsync(courseId);
-        //    var userId = _sharedIdentityService.GetUserId;
-        //    var discount = await _discountService.GetByCodeAndUserIdAndCourseId(code, userId,courseId);
-        //    return CreateActionResultInstance(discount);
-        //}
+       
 
 
 
@@ -63,13 +62,13 @@ namespace FreeCourse.Services.Discount.Controllers//75
 
 
         [HttpPost]
-        public async Task<IActionResult> Save(Models.Discount discount)
+        public async Task<IActionResult> Save(Models.DiscountEski discount)
         {
             return CreateActionResultInstance(await _discountService.Save(discount));
         }
         
         [HttpPut]
-        public async Task<IActionResult>Update(Models.Discount discount)
+        public async Task<IActionResult>Update(Models.DiscountEski discount)
         {
             return CreateActionResultInstance(await _discountService.Update(discount));
         }

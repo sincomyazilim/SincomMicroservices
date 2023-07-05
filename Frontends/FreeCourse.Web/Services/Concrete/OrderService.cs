@@ -17,10 +17,10 @@ namespace FreeCourse.Web.Services.Concrete//174-175 doldruyoruz
 
         private readonly IFakePaymentService _fakePaymentService;
         private readonly HttpClient _httpClient;
-        private readonly IBasketService _basketService;
+        private readonly IBasketService22 _basketService;
         private readonly ISharedIdentityService _sharedIdentityService;
 
-        public OrderService(IFakePaymentService fakePaymentService, HttpClient httpClient, IBasketService basketService, ISharedIdentityService sharedIdentityService)
+        public OrderService(IFakePaymentService fakePaymentService, HttpClient httpClient, IBasketService22 basketService, ISharedIdentityService sharedIdentityService)
         {
             _fakePaymentService = fakePaymentService;
             _httpClient = httpClient;
@@ -38,17 +38,18 @@ namespace FreeCourse.Web.Services.Concrete//174-175 doldruyoruz
                 CardNumber = checkoutInfoInput.CardNumber,
                 Expiration = checkoutInfoInput.Expiration,
                 CVV = checkoutInfoInput.CVV,
-                TotalPrice=basket.TotalPrice,
+                TotalPrice = basket.TotalPrice,
             };
-            var responsePayment=await _fakePaymentService.ReceivePayment(fakePaymentInfoInput);//fakepamet servıce gonderdık 
+            var responsePayment = await _fakePaymentService.ReceivePayment(fakePaymentInfoInput);//fakepamet servıce gonderdık 
             if (!responsePayment)
             {
                 return new OrderCreatedViewModel()//odemem gerceklesmezse bu mesajı ver
                 {
-                    Error = "Ödeme alinamadı", 
+                    Error = "Ödeme alinamadı",
                     IsSuccessful = false
                 };
             }
+            //BURDA SECRON MANTIGI VAR ONCER ODEME ALDIK SONRA SIPARIS OLDURTUDUK
             var orderCreateInput = new OrderCreateInput()//odeme gercekelsıtı artık order dldru ve kayıt et
             {
                 BuyerId = _sharedIdentityService.GetUserId,
@@ -56,28 +57,28 @@ namespace FreeCourse.Web.Services.Concrete//174-175 doldruyoruz
                 {
                     City = checkoutInfoInput.City,
                     District = checkoutInfoInput.District,
-                    Street = checkoutInfoInput.Street,                   
-                    ZipCode = checkoutInfoInput.ZipCode, 
-                    Line   = checkoutInfoInput.Line
-                },               
-                
+                    Street = checkoutInfoInput.Street,
+                    ZipCode = checkoutInfoInput.ZipCode,
+                    Line = checkoutInfoInput.Line
+                },
+
             };
             basket.BasketItems.ForEach(x =>
             {
                 var orderItem = new OrderItemCreateInput()
                 {
-                    ProductId=x.CourseId,
-                    Price= x.GetCurrentPrice,
-                    PictureUrl="",
-                    ProductName=x.CourseName
+                    ProductId = x.CourseId,
+                    Price = x.GetCurrentPrice,
+                    PictureUrl = "",
+                    ProductName = x.CourseName
 
 
                 };
                 orderCreateInput.OrderItems.Add(orderItem);//order doldurduk
             });
-            
 
-            var response = await _httpClient.PostAsJsonAsync<OrderCreateInput>("orders",orderCreateInput);//order kaydedıyorzu
+
+            var response = await _httpClient.PostAsJsonAsync<OrderCreateInput>("orders", orderCreateInput);//order kaydedıyorzu
             if (!response.IsSuccessStatusCode)
             {
                 return new OrderCreatedViewModel()//odemem gerceklesmezse bu mesajı ver
@@ -100,10 +101,78 @@ namespace FreeCourse.Web.Services.Concrete//174-175 doldruyoruz
             var repsonse = await _httpClient.GetFromJsonAsync<ResponseDto<List<OrderViewModel>>>("orders");//sıparıslero sırala
             return repsonse.Data;
         }
-
-        public Task<OrderSuspendViewModel> SuspendOrder(CheckoutInfoInput checkoutInfoInput)//asencron bolumudur
+        //--- ASENCRON BOLUMUDUR  185 VİDEO DOLDURACAZ
+     
+        
+        
+        
+        
+        public async Task<OrderSuspendViewModel> SuspendOrder(CheckoutInfoInput checkoutInfoInput)//asencron bolumudur
         {
-            throw new System.NotImplementedException();
+            var basket = await _basketService.GetBasket();//basketı getırdık
+
+
+            var orderCreateInput = new OrderCreateInput()//sipariş on bılgıler doldurduk bura adress bılgılerını doldurduk
+            {
+                BuyerId = _sharedIdentityService.GetUserId,
+                AddressDto = new AddressCreateInput()
+                {
+                    City = checkoutInfoInput.City,
+                    District = checkoutInfoInput.District,
+                    Street = checkoutInfoInput.Street,
+                    ZipCode = checkoutInfoInput.ZipCode,
+                    Line = checkoutInfoInput.Line
+                },
+
+            };
+           
+
+            basket.BasketItems.ForEach(x =>                      //burda urunbılgılerını  doldurduk
+            {
+                var orderItem = new OrderItemCreateInput()
+                {
+                    ProductId = x.CourseId,
+                    Price = x.GetCurrentPrice,
+                    PictureUrl = "",
+                    ProductName = x.CourseName
+
+
+                };
+                orderCreateInput.OrderItems.Add(orderItem);//order doldurduk
+            });
+
+       //BURAYA KADAR KART VE SIPARIS BILGILERI VE ÖDENECEK MIKAR(BASKET TEN CEKILDI) ALINDI VE CAGIRDIGIMIZ BASKET ICIUDEN ALINCAKLARIN BILGISINI  ASAGIDA YAZIYRUZ
+
+
+            var fakePaymenAsenkrontInfoInput = new FakePaymenAsenkrontInfoInput()//fakepayment ıcın gıdecek kart bılgılerını doldurudk içine order bılgılerde ekledık
+            {
+                CardName = checkoutInfoInput.CardName,
+                CardNumber = checkoutInfoInput.CardNumber,
+                Expiration = checkoutInfoInput.Expiration,
+                CVV = checkoutInfoInput.CVV,
+                TotalPrice = basket.TotalPrice,
+
+
+                Order= orderCreateInput,// asecronda burayı ekledık fazladan  order bılgısını burda eklıyoruz odeme gelıdgınde sıparsı olussun dıye
+            };
+
+            var responsePayment = await _fakePaymentService.ReceiveAsenkronPayment(fakePaymenAsenkrontInfoInput);//fakepamet servıce gonderdık 
+            if (!responsePayment)
+            {
+                return new OrderSuspendViewModel()//odemem gerceklesmezse bu mesajı ver
+                {
+                    Error = "Ödeme alinamadı",
+                    IsSuccessful = false
+                };
+            }
+
+            await _basketService.DeleteBasket();//sepetı temızlıyoruz
+
+            return new OrderSuspendViewModel() { IsSuccessful = true };
+
+
+
+
         }
     }
 }

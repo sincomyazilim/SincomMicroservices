@@ -1,7 +1,10 @@
 
+using FreeCourse.Services.Order.Application.ConsumersRabbitmq;
+using FreeCourse.Services.Order.Application.ConsumersRabbitmq.PublýshEvent;
 using FreeCourse.Services.Order.Infrastructure.Context;
 using FreeCourse.Shared.Services.Abstract;
 using FreeCourse.Shared.Services.Concrete;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +31,56 @@ namespace FreeCourse.Services.Order.API
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {//94 sqlserver baglanmak ýcýn kod yazdýk
+        {
+            //187 kuyruk fakepayment projesýndeký rabbýtmq dadýr orda rabýtmq ya baglatý cumlemýz vardý onu buryada tanýmlýyoruz 183 videode bu projeye eklemýstýk
+
+
+            //183 MassTransit.AspNetCore RabbitMq ayarlarý paketler yukledýn //187 ekledýk bunu gelýstýrecez
+
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<CreateOrderMessageCommandConsumer>();//187 commmand gonderdýk kuyruga 
+                x.AddConsumer<CourseNameChangedEventConsumer>();//191  evetlarý dýnlemek ýcýn eklýyruz
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  // bu projenýn appsetýnden yolunu okuyaak onun ýcýn appsetýnge ekleyelým urlyý
+                    {
+                        host.Username("guest");//burdaký kullanýcý adý ve þifre  defult gelýyor
+
+                        host.Password("guest");
+                    });
+                    //-----------------------------------------------------------------------------------187 ekledýk
+                    cfg.ReceiveEndpoint("create-order-service", e =>
+                    {
+                        e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);// kuyrukdtaký create-order-service adýndaký endPoint teki verýlerý okuyoruz
+                    });
+                    
+                    
+                    //-------------------------191
+                    cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>// burda entpoint tanýmlýyorz ký buraya baglasn
+                    {
+                        e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);//  endPoint teki verýlerý okuyoruz
+                    });
+
+                    //-----------------------------------------------------------------------------------
+
+                });
+
+            });
+            //5672 kullanýlan default port ayaga kalkýyor,onu takýp etmek ýcýn ýse 15672 portu uzerýnde takpedebýýrz
+            services.AddMassTransitHostedService();
+            //--------------------------------------------------183   
+
+
+
+
+            //-----------------------------187----------------------------------------------------
+
+
+
+
+            //94 sqlserver baglanmak ýcýn kod yazdýk
             services.AddDbContext<OrderDbContext>(opt =>
             {                                                     //DefaultConnection baglntý cumlesýný appsettýng.json dan alýyor.
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), configure =>

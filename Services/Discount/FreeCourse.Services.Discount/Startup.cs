@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -67,6 +68,11 @@ namespace FreeCourse.Services.Discount
 
 
 
+          
+
+
+
+
 
             services.AddSwaggerGen(c =>
             {
@@ -88,6 +94,9 @@ namespace FreeCourse.Services.Discount
             app.UseAuthentication();//74 gýrýs ýcýn kýmlýkdogrulama
 
             app.UseAuthorization();//yetký kýsmýdýr
+
+
+           
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,6 +1,7 @@
 ﻿using FreeCourse.Shared.Services.Abstract;
 using FreeCourse.Web.Exceptions;
 using FreeCourse.Web.Models;
+using FreeCourse.Web.Models.DiscountCourse;
 using FreeCourse.Web.Services.Abstract;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +19,15 @@ namespace FreeCourse.Web.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ICatalogService _catalogService;//148
       private readonly IEgitmenAdiGetirmek _gitmenAdiGetirmek;
+      
 
 
-
-        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService, IEgitmenAdiGetirmek gitmenAdiGetirmek)
+        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService, IEgitmenAdiGetirmek gitmenAdiGetirmek  )
         {
             _logger = logger;
             _catalogService = catalogService;
             _gitmenAdiGetirmek = gitmenAdiGetirmek;
+          
         }
         //------------------------------------------------
         public async Task<IActionResult> Index()
@@ -44,7 +46,20 @@ namespace FreeCourse.Web.Controllers
             return View(detailCourse);
         }
 
+        //public async Task<IActionResult> ApplyDiscountCourse(DiscounCoursetApplyInputCodeAndCourseId model)
+        //{
+        //    if (!ModelState.IsValid)//167 kupon gırılmezse verılecek hata 
+        //    {
+        //        TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
+        //    var model2=new DiscountCourseViewModelInput { CourseId=model.CourseId,  Code = model.Code };
+
+        //    var discountStatus = await _catalogService.ApplyDiscountCourse(model2);
+        //    TempData["discountStatus"] = discountStatus;
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public IActionResult Privacy()
         {
