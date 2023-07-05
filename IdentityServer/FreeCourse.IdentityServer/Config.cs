@@ -52,7 +52,7 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                 new ApiScope("gateway_fullpermission","Gateway  API için ful erişim"),//109
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)//38 identit kendısı ıcnde teyıt alıyor
             };
-       
+
         public static IEnumerable<Client> Clients =>
             new Client[]
             {//38 çnce içini sildik
@@ -83,6 +83,14 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
                     RefreshTokenUsage=TokenUsage.ReUse
                 },
+                //          new Client//194  bu kısmı benuygulamayacam Token exchange şayet uyguanaaksa burda ızın verıenler yukardakı ızınelrden cıkarılır
+                //{
+                //   ClientName="Token Exchange Client",
+                //    ClientId="TokenExhangeClient",
+                //    ClientSecrets= {new Secret("secret".Sha256())},
+                //    AllowedGrantTypes= new []{ "urn:ietf:params:oauth:grant-type:token-exchange" },
+                //    AllowedScopes={ "discount_fullpermission", "payment_fullpermission", IdentityServerConstants.StandardScopes.OpenId }
+                //},
 
             };
     }

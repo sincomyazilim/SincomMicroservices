@@ -64,6 +64,7 @@
       "UpstreamPathTemplate": "/services/discount/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],  //bunu ekledım ama projede kullanamaycam eger kullanacaksam "AllowedScopes": [ "discount_fullpermission" ]   bunu kapatmam gerekır 195
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "discount_fullpermission" ]
@@ -81,6 +82,7 @@
       "UpstreamPathTemplate": "/services/discountcourse/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "http",
+      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],  //bunu ekledım ama projede kullanamaycam eger kullanacaksam "AllowedScopes": [ "discountcourse_fullpermission" ]   bunu kapatmam gerekır 195
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "discountcourse_fullpermission" ]
@@ -115,7 +117,8 @@
       ],
       "UpstreamPathTemplate": "/services/fakepayment/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http",
+      "UpstreamScheme": "http", 
+      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],  //bunu ekledım ama projede kullanamaycam eger kullanacaksam "AllowedScopes": [ "fakepayment_fullpermission" ]   bunu kapatmam gerekır 195
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
         "AllowedScopes": [ "fakepayment_fullpermission" ]

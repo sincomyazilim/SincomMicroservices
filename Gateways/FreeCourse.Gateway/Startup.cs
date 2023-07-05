@@ -1,3 +1,4 @@
+using FreeCourse.Gateway.DelegateHandlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,6 +24,10 @@ namespace FreeCourse.Gateway
         }
         public void ConfigureServices(IServiceCollection services)// 109 koruma altýna alýyoruz
         {
+            //services.AddHttpClient<TokenExhangeDelegateHandler>();//195 hanlerý tanýmlýyoruz
+
+
+
             services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
             {
                options.Authority = Configuration["IdentityServerURL"];
@@ -33,7 +38,7 @@ namespace FreeCourse.Gateway
 
 
             services.AddOcelot();//105 kutuhanemýzý tanýmladýk
-
+           // services.AddOcelot().AddDelegatingHandler<TokenExhangeDelegateHandler>();195 eklýyoruz ama býzkullanmazyacaz
 
         }
 

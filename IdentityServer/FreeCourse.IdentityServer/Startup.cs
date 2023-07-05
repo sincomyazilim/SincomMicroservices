@@ -59,6 +59,14 @@ namespace FreeCourse.IdentityServer
                 .AddAspNetIdentity<ApplicationUser>();
  
                  builder.AddResourceOwnerValidator<IdentityResourseOwnerPasswordValidator>();//42 token almak ıcın kullalcılı gırıs yapılıyor
+                 builder.AddExtensionGrantValidator<TokenExchangeExtensionGrantValidator>();//193 EKLENDİ
+
+
+
+
+
+
+
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
