@@ -1,0 +1,18 @@
+bu katman ýndýrým katmanýdýr  sadece ýndýrým kuponlarý tanýmlanacakve ýndýrýmoraný eklenecek göndrýleek burda ayrýca  
+orm olarak dapper kullnaýldý verýtabaný olarakta postgres verýtabaný kullanýldý
+
+
+
+   public async Task<ResponseDto<Models.Discount>> GetByCodeAndUserId(string userId, GetCodeandCorseIdDto getCodeandCorseIdDto)
+        {
+
+
+            var discounts = await _dbconnection.QueryAsync<Models.Discount>("select * from discount where userid=@UserId and code=@Code and courseId=@courseId", new { UserId = userId, Code = getCodeandCorseIdDto.Code, getCodeandCorseIdDto.CourseId });
+            var hasdiscount = discounts.FirstOrDefault();
+            if (hasdiscount == null)
+            {
+                return ResponseDto<Models.Discount>.Fail("böyle indirim kodu yok", 404);
+
+            }
+            return ResponseDto<Models.Discount>.Success(hasdiscount, 200);
+        }

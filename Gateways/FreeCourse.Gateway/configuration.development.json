@@ -11,11 +11,11 @@
         }
       ],
       "UpstreamPathTemplate": "/services/catalog/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "catalog_fullpermission" ]
+        "AllowedScopes": ["catalog_fullpermission"]
       }
     },
     {
@@ -28,11 +28,11 @@
         }
       ],
       "UpstreamPathTemplate": "/services/phototostock/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "photo_stock_fullpermission" ]
+        "AllowedScopes": ["photo_stock_fullpermission"]
       }
     },
     {
@@ -45,11 +45,11 @@
         }
       ],
       "UpstreamPathTemplate": "/services/basket/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "basket_fullpermission" ]
+        "AllowedScopes": ["basket_fullpermission"]
       }
     },
     {
@@ -62,32 +62,13 @@
         }
       ],
       "UpstreamPathTemplate": "/services/discount/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http",
-      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],  //bunu ekledım ama projede kullanamaycam eger kullanacaksam "AllowedScopes": [ "discount_fullpermission" ]   bunu kapatmam gerekır 195
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
+      "UpstreamScheme": "http",     
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "discount_fullpermission" ]
+        "AllowedScopes": ["discount_fullpermission"]
       }
-    },
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5017
-        }
-      ],
-      "UpstreamPathTemplate": "/services/discountcourse/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http",
-      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],  //bunu ekledım ama projede kullanamaycam eger kullanacaksam "AllowedScopes": [ "discountcourse_fullpermission" ]   bunu kapatmam gerekır 195
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "discountcourse_fullpermission" ]
-      }
-    },
+    }, 
 
     {
       "DownstreamPathTemplate": "/api/{everything}",
@@ -99,11 +80,11 @@
         }
       ],
       "UpstreamPathTemplate": "/services/order/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
       "UpstreamScheme": "http",
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "order_fullpermission" ]
+        "AllowedScopes": ["order_fullpermission"]
       }
     },
     {
@@ -116,12 +97,11 @@
         }
       ],
       "UpstreamPathTemplate": "/services/fakepayment/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "http", 
-      //"DelegatingHandlers": [ "TokenExhangeDelegateHandler" ],  //bunu ekledım ama projede kullanamaycam eger kullanacaksam "AllowedScopes": [ "fakepayment_fullpermission" ]   bunu kapatmam gerekır 195
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
+      "UpstreamScheme": "http",       
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": [ "fakepayment_fullpermission" ]
+        "AllowedScopes": ["fakepayment_fullpermission"]
       }
     }
   ],

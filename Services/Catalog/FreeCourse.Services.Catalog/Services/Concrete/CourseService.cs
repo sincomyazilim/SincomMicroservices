@@ -99,11 +99,11 @@ namespace FreeCourse.Services.Catalog.Services.Concrete//25
                 UpdateName = updateCourse.Name,
             });
             //-----------------------------------------------------------
-            await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent
-            {
-                CourseId = updateCourse.Id,       //bu kısım kurs ısmı degıstıınde evet fırtlaacak yerdır kuyruk olusturacak rabbıtmq da
-                UpdateName = updateCourse.Name,
-            });
+            //await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent
+            //{
+            //    CourseId = updateCourse.Id,       //bu kısım kurs ısmı degıstıınde evet fırtlaacak yerdır kuyruk olusturacak rabbıtmq da
+            //    UpdateName = updateCourse.Name,
+            //});
             //-----------------------------------------------------------
 
 

@@ -17,8 +17,7 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
             new ApiResource("resourse_catalog"){Scopes={"catalog_fullpermission"}},//38
             new ApiResource("resourse_photo_stock"){Scopes={"photo_stock_fullpermission"}},//38
             new ApiResource("resourse_basket"){Scopes={"basket_fullpermission"}},//62
-            new ApiResource("resourse_discount"){Scopes={"discount_fullpermission"}},//74
-            new ApiResource("resourse_discountcourse"){Scopes={"discountcourse_fullpermission"}},//74
+            new ApiResource("resourse_discount"){Scopes={"discount_fullpermission"}},//74           
             new ApiResource("resourse_order"){Scopes={"order_fullpermission"}},//96
             new ApiResource("resourse_fakepayment"){Scopes={"fakepayment_fullpermission"}},//101
             new ApiResource("resourse_gateway"){Scopes={"gateway_fullpermission"}},//109
@@ -45,8 +44,7 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                 new ApiScope("catalog_fullpermission","Catalog API için ful erişim"),//38
                 new ApiScope("photo_stock_fullpermission","Photo Stock API için ful erişim"),//38
                 new ApiScope("basket_fullpermission","Basket  API için ful erişim"),//62
-                new ApiScope("discount_fullpermission","Discount  API için ful erişim"),//74
-                new ApiScope("discountcourse_fullpermission","DiscountCourse  API için ful erişim"),//74
+                new ApiScope("discount_fullpermission","Discount  API için ful erişim"),//74               
                 new ApiScope("order_fullpermission","Order  API için ful erişim"),//96
                 new ApiScope("fakepayment_fullpermission","FakePayment  API için ful erişim"),//101
                 new ApiScope("gateway_fullpermission","Gateway  API için ful erişim"),//109
@@ -72,7 +70,8 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                     AllowOfflineAccess=true,
                     ClientSecrets ={ new Secret("secret".Sha256()) },
                     AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes={"basket_fullpermission","discount_fullpermission","discountcourse_fullpermission","order_fullpermission","fakepayment_fullpermission","gateway_fullpermission",
+                    AllowedScopes={                          
+                           "basket_fullpermission","discount_fullpermission","order_fullpermission","fakepayment_fullpermission","gateway_fullpermission",
                          IdentityServerConstants.StandardScopes.Email,
                          IdentityServerConstants.StandardScopes.OpenId,
                          IdentityServerConstants.StandardScopes.Profile,
@@ -83,14 +82,7 @@ namespace FreeCourse.IdentityServer//38 bu sınıfı yapılandırıyz
                     AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
                     RefreshTokenUsage=TokenUsage.ReUse
                 },
-                //          new Client//194  bu kısmı benuygulamayacam Token exchange şayet uyguanaaksa burda ızın verıenler yukardakı ızınelrden cıkarılır
-                //{
-                //   ClientName="Token Exchange Client",
-                //    ClientId="TokenExhangeClient",
-                //    ClientSecrets= {new Secret("secret".Sha256())},
-                //    AllowedGrantTypes= new []{ "urn:ietf:params:oauth:grant-type:token-exchange" },
-                //    AllowedScopes={ "discount_fullpermission", "payment_fullpermission", IdentityServerConstants.StandardScopes.OpenId }
-                //},
+               
 
             };
     }

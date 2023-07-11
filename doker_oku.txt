@@ -1,0 +1,7 @@
+
+docker ýle vusulasdýo ýle ýslemyaptýk docker-compose.yml ve docker-composer.orriver.yl adýnda ýký yapýlandýrma sayfasý olusturdu
+bu ýký dosyayý anadýzýne eklýyoruz..
+
+volume= contaýnerlar ayak ýken kayýt altýna alýnann verýler kaybolmasýn dýye valome tanýmlanýyor
+
+docker up yaka kalakar  docker down

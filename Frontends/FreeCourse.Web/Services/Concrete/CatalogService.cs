@@ -118,34 +118,8 @@ namespace FreeCourse.Web.Services.Concrete//130
         }
 
 
-        public async Task<bool> ApplyDiscountCourse(DiscountCourseViewModelInput discountCourseViewModelInput)//tek derse göre ındırımkodu uretmek
-        {
-            //await CanselApplyDiscountCourse();//daha önce ındıırm olmussa ıptalet
+       
 
-            //var discounCoursetApplyInputCodeAndCourseId = new DiscounCoursetApplyInputCodeAndCourseId { Code = discountCode, CourseId = courseId };
-
-            // var hasdiscount = await _discountCourseService.GetDiscountCourse(discounCoursetApplyInputCodeAndCourseId);
-            //if (hasdiscount == null)
-            //{
-            //    return false;
-            //}
-            // basket.ApplyDiscount(hasdiscount.Code, hasdiscount.Rate);//sepetı guncellıyoruz bunada metot yazıyoruz 167
-
-            //await SaveOrUpdateBasket(basket);//son halınıkayıt veye update edıyoruz
-            return true;
-        }
-
-        public async Task<bool> CanselApplyDiscountCourse()//164 doldurudk dıscount olusturdukondan sonra
-        {
-            //var basket = await GetBasket();
-            //if (basket == null || basket.DiscountCode == null)//basket bos gelırse false dön
-            //{
-            //    return false;
-            //}
-            //basket.CanselDiscount();//basket ıptal edılmıs son halını guncelle,,null yaptık buraya metoto yazdık 167
-
-            //await SaveOrUpdateBasket(basket);//guncellenen sepetı savechange et
-            return true;
-        }
+       
     }
 }

@@ -1,6 +1,6 @@
 
 using FreeCourse.Services.Order.Application.ConsumersRabbitmq;
-using FreeCourse.Services.Order.Application.ConsumersRabbitmq.PublýshEvent;
+using FreeCourse.Services.Order.Application.ConsumersRabbitmq.PubliishEvent;
 using FreeCourse.Services.Order.Infrastructure.Context;
 using FreeCourse.Shared.Services.Abstract;
 using FreeCourse.Shared.Services.Concrete;
@@ -32,35 +32,35 @@ namespace FreeCourse.Services.Order.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //187 kuyruk fakepayment projesýndeký rabbýtmq dadýr orda rabýtmq ya baglatý cumlemýz vardý onu buryada tanýmlýyoruz 183 videode bu projeye eklemýstýk
+            //187 kuyruk fakepayment projesï¿½ndekï¿½ rabbï¿½tmq dadï¿½r orda rabï¿½tmq ya baglatï¿½ cumlemï¿½z vardï¿½ onu buryada tanï¿½mlï¿½yoruz 183 videode bu projeye eklemï¿½stï¿½k
 
 
-            //183 MassTransit.AspNetCore RabbitMq ayarlarý paketler yukledýn //187 ekledýk bunu gelýstýrecez
+            //183 MassTransit.AspNetCore RabbitMq ayarlarï¿½ paketler yukledï¿½n //187 ekledï¿½k bunu gelï¿½stï¿½recez
 
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<CreateOrderMessageCommandConsumer>();//187 commmand gonderdýk kuyruga 
-                x.AddConsumer<CourseNameChangedEventConsumer>();//191  evetlarý dýnlemek ýcýn eklýyruz
+                x.AddConsumer<CreateOrderMessageCommandConsumer>();//187 commmand gonderdï¿½k kuyruga 
+                x.AddConsumer<CourseNameChangedEventConsumer>();//191  evetlarï¿½ dï¿½nlemek ï¿½cï¿½n eklï¿½yruz
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  // bu projenýn appsetýnden yolunu okuyaak onun ýcýn appsetýnge ekleyelým urlyý
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>  // bu projenï¿½n appsetï¿½nden yolunu okuyaak onun ï¿½cï¿½n appsetï¿½nge ekleyelï¿½m urlyï¿½
                     {
-                        host.Username("guest");//burdaký kullanýcý adý ve þifre  defult gelýyor
+                        host.Username("guest");//burdakï¿½ kullanï¿½cï¿½ adï¿½ ve ï¿½ifre  defult gelï¿½yor
 
                         host.Password("guest");
                     });
-                    //-----------------------------------------------------------------------------------187 ekledýk
+                    //-----------------------------------------------------------------------------------187 ekledï¿½k
                     cfg.ReceiveEndpoint("create-order-service", e =>
                     {
-                        e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);// kuyrukdtaký create-order-service adýndaký endPoint teki verýlerý okuyoruz
+                        e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);// kuyrukdtakï¿½ create-order-service adï¿½ndakï¿½ endPoint teki verï¿½lerï¿½ okuyoruz
                     });
                     
                     
                     //-------------------------191
-                    cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>// burda entpoint tanýmlýyorz ký buraya baglasn
+                    cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>// burda entpoint tanï¿½mlï¿½yorz kï¿½ buraya baglasn
                     {
-                        e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);//  endPoint teki verýlerý okuyoruz
+                        e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);//  endPoint teki verï¿½lerï¿½ okuyoruz
                     });
 
                     //-----------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ namespace FreeCourse.Services.Order.API
                 });
 
             });
-            //5672 kullanýlan default port ayaga kalkýyor,onu takýp etmek ýcýn ýse 15672 portu uzerýnde takpedebýýrz
+            //5672 kullanï¿½lan default port ayaga kalkï¿½yor,onu takï¿½p etmek ï¿½cï¿½n ï¿½se 15672 portu uzerï¿½nde takpedebï¿½ï¿½rz
             services.AddMassTransitHostedService();
             //--------------------------------------------------183   
 
@@ -80,42 +80,42 @@ namespace FreeCourse.Services.Order.API
 
 
 
-            //94 sqlserver baglanmak ýcýn kod yazdýk
+            //94 sqlserver baglanmak ï¿½cï¿½n kod yazdï¿½k
             services.AddDbContext<OrderDbContext>(opt =>
-            {                                                     //DefaultConnection baglntý cumlesýný appsettýng.json dan alýyor.
+            {                                                     //DefaultConnection baglntï¿½ cumlesï¿½nï¿½ appsettï¿½ng.json dan alï¿½yor.
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), configure =>
                 {
-                    configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");//configure miration baska katmandaký proede oldugu ýcýn ve bunu anlamasýýcýn ona yol gösterýyoruz proje adý FreeCourse.Services.Order.Infrastructure
+                    configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");//configure miration baska katmandakï¿½ proede oldugu ï¿½cï¿½n ve bunu anlamasï¿½ï¿½cï¿½n ona yol gï¿½sterï¿½yoruz proje adï¿½ FreeCourse.Services.Order.Infrastructure
                 });
             });//94
             
             
-            //95 application katmaný handler eklenýyor
+            //95 application katmanï¿½ handler eklenï¿½yor
             services.AddMediatR(typeof(FreeCourse.Services.Order.Application.Handlers.CreateOrderCommandHandler).Assembly);
-            services.AddScoped<ISharedIdentityService, SharedIdentityService>();//95 userID Identýyserverdan getýrmek cýn shared katmaný eklenýyor
-            services.AddHttpContextAccessor(); //bu katman shrad katmanýndaký UserId tanýmasý ýcýn eklenýyor 
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();//95 userID Identï¿½yserverdan getï¿½rmek cï¿½n shared katmanï¿½ eklenï¿½yor
+            services.AddHttpContextAccessor(); //bu katman shrad katmanï¿½ndakï¿½ UserId tanï¿½masï¿½ ï¿½cï¿½n eklenï¿½yor 
                                                //95-----------------------------------------------------------------------------
 
 
-            //giriþ için
+            //giriï¿½ iï¿½in
 
-            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();//96 giriþ yapýmýs user býlgýsý sartý ve token alacak 96
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();//96 giriï¿½ yapï¿½mï¿½s user bï¿½lgï¿½sï¿½ sartï¿½ ve token alacak 96
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");//sub kelýmesý dönuste sýlýyordu kendý maplemeýsnde Id yapýyordu býzde bu kodla donusu sub býrakdýyorzu
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");//sub kelï¿½mesï¿½ dï¿½nuste sï¿½lï¿½yordu kendï¿½ maplemeï¿½snde Id yapï¿½yordu bï¿½zde bu kodla donusu sub bï¿½rakdï¿½yorzu
 
 
-            //96 burda authentication tanýmlýyoruz ayrý ktamanda olan proje kendý ayaga kalkýyor ve ordan dagýtýlan authentoýn ýle ayar verýyrouz
+            //96 burda authentication tanï¿½mlï¿½yoruz ayrï¿½ ktamanda olan proje kendï¿½ ayaga kalkï¿½yor ve ordan dagï¿½tï¿½lan authentoï¿½n ï¿½le ayar verï¿½yrouz
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
-                opt.Authority = Configuration["IdentityServerURL"];//bu kýsýmda order-appsettýngs.josn lýnk verýlecek.lýnk budur "IdentityServerURL": "http://localhost:5001", //identiserver ie bu mýcroservýs habdar oluyor
-                opt.Audience = "resourse_order";//ýdentityserver ýcýndeký confýg dosyasýnda recourse_order aldým ordan kontrol edecek
-                opt.RequireHttpsMetadata = false; //https ýstemýyoruz
-            });//96 basket mýcroservýste kullanýcýlý baglantýlýrdýr
+                opt.Authority = Configuration["IdentityServerURL"];//bu kï¿½sï¿½mda order-appsettï¿½ngs.josn lï¿½nk verï¿½lecek.lï¿½nk budur "IdentityServerURL": "http://localhost:5001", //identiserver ie bu mï¿½croservï¿½s habdar oluyor
+                opt.Audience = "resourse_order";//ï¿½dentityserver ï¿½cï¿½ndekï¿½ confï¿½g dosyasï¿½nda recourse_order aldï¿½m ordan kontrol edecek
+                opt.RequireHttpsMetadata = false; //https ï¿½stemï¿½yoruz
+            });//96 basket mï¿½croservï¿½ste kullanï¿½cï¿½lï¿½ baglantï¿½lï¿½rdï¿½r
 
-            //services.AddControllers();//96 alttaký gýbý genýsletýyoruz  koruma alýtýna alýyoruz yaný gýrýs sartý var
+            //services.AddControllers();//96 alttakï¿½ gï¿½bï¿½ genï¿½sletï¿½yoruz  koruma alï¿½tï¿½na alï¿½yoruz yanï¿½ gï¿½rï¿½s sartï¿½ var
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));//96 burayý genýsletýyoruz ve butun kontroller  token alamdan bagalanamz,user þartý var  requireAuthorizePolicy bunu yukarda tanýmladýk
+                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));//96 burayï¿½ genï¿½sletï¿½yoruz ve butun kontroller  token alamdan bagalanamz,user ï¿½artï¿½ var  requireAuthorizePolicy bunu yukarda tanï¿½mladï¿½k
             });
 
 
@@ -137,7 +137,7 @@ namespace FreeCourse.Services.Order.API
             }
 
             app.UseRouting();
-            app.UseAuthentication();//96 ekledýk giriþ için
+            app.UseAuthentication();//96 ekledï¿½k giriï¿½ iï¿½in
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

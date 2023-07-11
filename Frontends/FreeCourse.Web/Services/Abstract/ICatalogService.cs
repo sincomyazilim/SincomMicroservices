@@ -17,11 +17,5 @@ namespace FreeCourse.Web.Services.Abstract//130
         Task<bool> UpdateCourseAsync(UpdateCourseInput updateCourseInput);
         Task<bool> DeleteCourseAsync(string courseId);
 
-
-
-
-        Task<bool> ApplyDiscountCourse(DiscountCourseViewModelInput discountCourseViewModelInput);
-        Task<bool> CanselApplyDiscountCourse();
-
     }
 }

@@ -37,11 +37,7 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
 
         public async Task<ResponseDto<Models.DiscountEski>> GetByCodeAndUserId(string code, string userId)
         {
-            //var discounts=await _dbconnection.QueryAsync<Models.Discount>("select * from discount where userid@UserId and code=@Code", new 
-            //{
-            //    Code=code,
-            //    UserId=userId 
-            //});
+            
 
             var discounts = await _dbconnection.QueryAsync<Models.DiscountEski>("select * from discounteski where userid=@UserId and code=@Code", new { UserId = userId, Code = code });
            
@@ -54,20 +50,7 @@ namespace FreeCourse.Services.Discount.Services.Conrete//71
             return ResponseDto<Models.DiscountEski>.Success(hasdiscount,200);
         }
         //-------------------------------------------------------------------------------------------------------------------------------------------
-        //public async Task<ResponseDto<Models.DiscountEski>> GetByCodeAndUserIdandCourseId(string userId, GetCodeandCorseIdDto getCodeandCorseIdDto)
-        //{
-
-
-        //    var discounts = await _dbconnection.QueryAsync<Models.DiscountEski>("select * from discounteski where userid=@UserId and code=@Code and courseId=@courseId", new { UserId = userId, Code = getCodeandCorseIdDto.Code, getCodeandCorseIdDto.CourseId });
-        //    var hasdiscount = discounts.FirstOrDefault();
-        //    if (hasdiscount == null)
-        //    {
-        //        return ResponseDto<Models.DiscountEski>.Fail("böyle indirim kodu yok", 404);
-
-        //    }
-        //    return ResponseDto<Models.DiscountEski>.Success(hasdiscount, 200);
-        //}
-        //-------------------------------------------------------------------------------------------------------------------------------------------------
+        
 
 
         public async Task<ResponseDto<Models.DiscountEski>> GetById(int id)
