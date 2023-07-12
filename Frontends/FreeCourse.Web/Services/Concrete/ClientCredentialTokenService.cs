@@ -27,7 +27,7 @@ namespace FreeCourse.Web.Services.Concrete//135
 
         public async Task<string> GetTokenAsync()
         {
-            var currentToken = await _clientAccessTokenCache.GetAsync("WebClientToken");//cashte beynde boyle bır tokn varmı
+            var currentToken = await _clientAccessTokenCache.GetAsync("WebClientToken",null);//cashte beynde boyle bır tokn varmı
             if (currentToken != null)
             {
                 return currentToken.AccessToken;//varsa token dön
@@ -56,7 +56,7 @@ namespace FreeCourse.Web.Services.Concrete//135
                 throw newToken.Exception; //tokende hata varsa fırlat sebebını
             }
             //token alındıysa hata yoks demek,cashe gönder suresıyle bırlıkte
-            await _clientAccessTokenCache.SetAsync("WebClientToken", newToken.AccessToken, newToken.ExpiresIn);//token hafıaz al defaul suresı ıle
+            await _clientAccessTokenCache.SetAsync("WebClientToken", newToken.AccessToken, newToken.ExpiresIn,null);//token hafıaz al defaul suresı ıle
 
             return newToken.AccessToken;//token döndur
 

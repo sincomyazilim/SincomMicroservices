@@ -1,38 +1,126 @@
+ï»¿using FreeCourse.Services.Order.Application.ConsumersRabbitmq;
+using FreeCourse.Services.Order.Application.ConsumersRabbitmq.PubliishEvent;
 using FreeCourse.Services.Order.Infrastructure.Context;
-using Microsoft.AspNetCore.Hosting;
+using FreeCourse.Shared.Services.Abstract;
+using FreeCourse.Shared.Services.Concrete;
+using MassTransit;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using static MassTransit.MessageHeaders;
 
-namespace FreeCourse.Services.Order.API
+var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddMassTransit(x =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            //CreateHostBuilder(args).Build().Run;//213 bu kodu ýptal edýpasagýdaký sekle cevýrýyorzu order tablosu otomatýk mýgratoý nyapýp eklenemsý ýcýn eklýyse eklemez degýlse ekler
-            var host = CreateHostBuilder(args).Build();
-            using (var scope=host.Services.CreateScope())
-            {
-                var serviceProvider= scope.ServiceProvider;
-                var orderDbContext=serviceProvider.GetRequiredService<OrderDbContext>();
-                orderDbContext.Database.Migrate();
-            }
-                host.Run();
-            //213--------------------------------------------------------------------------------------
-        }
+    x.AddConsumer<CreateOrderMessageCommandConsumer>();//187 commmand gonderdï¿½k kuyruga 
+    x.AddConsumer<CourseNameChangedEventConsumer>();//191  evetlarï¿½ dï¿½nlemek ï¿½cï¿½n eklï¿½yruz
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQUrl"], "/", host =>  // bu projenï¿½n appsetï¿½nden yolunu okuyaak onun ï¿½cï¿½n appsetï¿½nge ekleyelï¿½m urlyï¿½
+        {
+            host.Username("guest");//burdakï¿½ kullanï¿½cï¿½ adï¿½ ve ï¿½ifre  defult gelï¿½yor
+
+            host.Password("guest");
+        });
+        //-----------------------------------------------------------------------------------187 ekledï¿½k
+        cfg.ReceiveEndpoint("create-order-service", e =>
+        {
+            e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);// kuyrukdtakï¿½ create-order-service adï¿½ndakï¿½ endPoint teki verï¿½lerï¿½ okuyoruz
+        });
+
+
+        //-------------------------191
+        cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>// burda entpoint tanï¿½mlï¿½yorz kï¿½ buraya baglasn
+        {
+            e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);//  endPoint teki verï¿½lerï¿½ okuyoruz
+        });
+
+        //-----------------------------------------------------------------------------------
+
+    });
+
+});
+//5672 kullanï¿½lan default port ayaga kalkï¿½yor,onu takï¿½p etmek ï¿½cï¿½n ï¿½se 15672 portu uzerï¿½nde takpedebï¿½ï¿½rz
+//services.AddMassTransitHostedService();
+//--------------------------------------------------183   
+
+
+
+
+
+//94 sqlserver baglanmak ï¿½cï¿½n kod yazdï¿½k
+builder.Services.AddDbContext<OrderDbContext>(opt =>
+{                                                     //DefaultConnection baglntï¿½ cumlesï¿½nï¿½ appsettï¿½ng.json dan alï¿½yor.
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), configure =>
+    {
+        configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");//configure miration baska katmandakï¿½ proede oldugu ï¿½cï¿½n ve bunu anlamasï¿½ï¿½cï¿½n ona yol gï¿½sterï¿½yoruz proje adï¿½ FreeCourse.Services.Order.Infrastructure
+    });
+});//94
+
+
+//95 application katmanï¿½ handler eklenï¿½yor
+builder.Services.AddMediatR(typeof(FreeCourse.Services.Order.Application.Handlers.CreateOrderCommandHandler).Assembly);
+builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();//95 userID Identï¿½yserverdan getï¿½rmek cï¿½n shared katmanï¿½ eklenï¿½yor
+builder.Services.AddHttpContextAccessor(); //bu katman shrad katmanï¿½ndakï¿½ UserId tanï¿½masï¿½ ï¿½cï¿½n eklenï¿½yor 
+                                           //95-----------------------------------------------------------------------------
+
+
+//giriï¿½ iï¿½in
+
+var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();//96 giriï¿½ yapï¿½mï¿½s user bï¿½lgï¿½sï¿½ sartï¿½ ve token alacak 96
+
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");//sub kelï¿½mesï¿½ dï¿½nuste sï¿½lï¿½yordu kendï¿½ maplemeï¿½snde Id yapï¿½yordu bï¿½zde bu kodla donusu sub bï¿½rakdï¿½yorzu
+
+
+//96 burda authentication tanï¿½mlï¿½yoruz ayrï¿½ ktamanda olan proje kendï¿½ ayaga kalkï¿½yor ve ordan dagï¿½tï¿½lan authentoï¿½n ï¿½le ayar verï¿½yrouz
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+{
+    opt.Authority = builder.Configuration["IdentityServerURL"];//bu kï¿½sï¿½mda order-appsettï¿½ngs.josn lï¿½nk verï¿½lecek.lï¿½nk budur "IdentityServerURL": "http://localhost:5001", //identiserver ie bu mï¿½croservï¿½s habdar oluyor
+    opt.Audience = "resourse_order";//ï¿½dentityserver ï¿½cï¿½ndekï¿½ confï¿½g dosyasï¿½nda recourse_order aldï¿½m ordan kontrol edecek
+    opt.RequireHttpsMetadata = false; //https ï¿½stemï¿½yoruz
+});//96 basket mï¿½croservï¿½ste kullanï¿½cï¿½lï¿½ baglantï¿½lï¿½rdï¿½r
+
+//services.AddControllers();//96 alttakï¿½ gï¿½bï¿½ genï¿½sletï¿½yoruz  koruma alï¿½tï¿½na alï¿½yoruz yanï¿½ gï¿½rï¿½s sartï¿½ var
+builder.Services.AddControllers(opt =>
+{
+    opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));//96 burayï¿½ genï¿½sletï¿½yoruz ve butun kontroller  token alamdan bagalanamz,user ï¿½artï¿½ var  requireAuthorizePolicy bunu yukarda tanï¿½mladï¿½k
+});
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var orderDbContext = serviceProvider.GetRequiredService<OrderDbContext>();
+    orderDbContext.Database.Migrate();
 }
+
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+

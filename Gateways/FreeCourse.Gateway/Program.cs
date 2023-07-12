@@ -1,40 +1,80 @@
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using Ocelot.Values;
 
-namespace FreeCourse.Gateway
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile($"configuration.{builder.Environment.EnvironmentName.ToLower()}.json").AddEnvironmentVariables();
+//bu mettot ýle configuration.development ve configuration.production ulasabýlýyoruz 106
+
+//services.AddHttpClient<TokenExhangeDelegateHandler>();//195 hanlerý tanýmlýyoruz
+
+
+
+builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    options.Authority =builder.Configuration["IdentityServerURL"];
+    options.Audience = "resourse_gateway";
+    options.RequireHttpsMetadata = false;
+});
 
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(webBuilder =>
-        //        {
-        //            webBuilder.UseStartup<Startup>();
-        //        });
 
-        // yukardaký medudu buna cevýrýyorz 106
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-          Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((hostingContext, config) =>
-          {
 
-              config.AddJsonFile($"configuration.{hostingContext.HostingEnvironment.EnvironmentName.ToLower()}.json").AddEnvironmentVariables();
-              //bu mettot ýle configuration.development ve configuration.production ulasabýlýyoruz 106
+builder.Services.AddOcelot();//105 kutuhanemýzý tanýmladýk
+                     // services.AddOcelot().AddDelegatingHandler<TokenExhangeDelegateHandler>();195 eklýyoruz ama býzkullanmazyacaz
 
-          })
-              .ConfigureWebHostDefaults(webBuilder =>
-              {
-                  webBuilder.UseStartup<Startup>();
-              });
-    }
-}
+
+
+var app = builder.Build();
+
+
+await app.UseOcelot();
+
+app.UseAuthorization();
+app.UseDeveloperExceptionPage();
+app.MapControllers();
+
+app.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

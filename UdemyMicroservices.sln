@@ -64,6 +64,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontends", "frontends", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.Web", "Frontends\FreeCourse.Web\FreeCourse.Web.csproj", "{E54A283D-024A-47E9-8D8C-42C2E8018C38}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExampleReference.Api", "ExampleReference.Api\ExampleReference.Api.csproj", "{ECDC4AD3-0B4A-4C4C-A973-B71C444407F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleReference.Web", "ExampleReference.Web\ExampleReference.Web.csproj", "{AAFDFDA7-A61F-47A4-A8BD-42A250E01D08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +130,14 @@ Global
 		{E54A283D-024A-47E9-8D8C-42C2E8018C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E54A283D-024A-47E9-8D8C-42C2E8018C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E54A283D-024A-47E9-8D8C-42C2E8018C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECDC4AD3-0B4A-4C4C-A973-B71C444407F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECDC4AD3-0B4A-4C4C-A973-B71C444407F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECDC4AD3-0B4A-4C4C-A973-B71C444407F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECDC4AD3-0B4A-4C4C-A973-B71C444407F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFDFDA7-A61F-47A4-A8BD-42A250E01D08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFDFDA7-A61F-47A4-A8BD-42A250E01D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFDFDA7-A61F-47A4-A8BD-42A250E01D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFDFDA7-A61F-47A4-A8BD-42A250E01D08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
