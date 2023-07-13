@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-buster-slim as build
 WORKDIR /app
 EXPOSE 80
 COPY Shared/FreeCourse.Shared/*.csproj Shared/FreeCourse.Shared/
@@ -16,10 +16,10 @@ COPY Services/Order/FreeCourse.Services.Order.API/*.csproj Services/Order/FreeCo
 RUN dotnet restore Services/Order/FreeCourse.Services.Order.API/*.csproj
 COPY . .
 RUN dotnet publish Services/Order/FreeCourse.Services.Order.API/*.csproj -c Release -o out
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-buster-slim as runtime
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT [ "dotnet","FreeCourse.Services.Order.API.dll" ]
+ENTRYPOINT ["dotnet","FreeCourse.Services.Order.API.dll"]
 
 
 
